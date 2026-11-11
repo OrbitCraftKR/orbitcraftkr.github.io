@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OrbitCraft</title>
+<meta name="description" content="OrbitCraft · 발사체, 추진, 복합재 제조, 인공위성을 연구하는 항공우주 연구 공간">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+
+/* Layout: lab-style page on one 880px column. Hero with a launch-to-orbit figure,
+   then 소개 / 연구 / 월간지 / 문의 as plain ruled sections. */
+:root {
+  --paper: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #0f1b2d;
+  --muted: #5a6779;
+  --line: #d9dfe7;
+  --accent: #d4500f;      /* aerospace safety orange */
+  --accent-soft: #fbe9df;
+  --orbit: #9aa8bb;
+  --earth: #2c5d8f;
+
+  --f-display: "Chakra Petch", "IBM Plex Sans KR", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0b1220; --panel: #121c2e; --ink: #e6ebf2; --muted: #93a0b3;
+    --line: #233149; --accent: #ff8a46; --accent-soft: #2d1d15; --orbit: #3f5170; --earth: #4f86bf;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0b1220; --panel: #121c2e; --ink: #e6ebf2; --muted: #93a0b3;
+  --line: #233149; --accent: #ff8a46; --accent-soft: #2d1d15; --orbit: #3f5170; --earth: #4f86bf;
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.7;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--paper);
+}
+.wrap {
+  max-width: 880px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Header */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-family: var(--f-display); font-weight: 600; font-size: 19px; letter-spacing: .02em; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.logo svg { width: 20px; height: 20px; }
+nav { display: flex; gap: 20px; font-size: 14px; }
+nav a { text-decoration: none; color: var(--muted); }
+nav a:hover { color: var(--ink); }
+
+/* Hero */
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: center; padding-block: 64px 52px; }
+.hero .wrap > * { min-width: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.hero h1 { font-family: var(--f-display); font-weight: 600; font-size: clamp(40px, 7vw, 60px); line-height: 1.05; margin: 12px 0 18px; letter-spacing: -.01em; }
+.hero p.lead { color: var(--muted); font-size: 17px; margin: 0 0 24px; max-width: 30em; text-wrap: pretty; }
+.hero p.lead strong { color: var(--ink); font-weight: 600; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 6px;
+  font: 500 15px var(--f-body); text-decoration: none; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer;
+}
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn:hover { border-color: var(--accent); }
+
+.scope { margin: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; }
+.scope-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.scope-head span:first-child { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--accent); padding-top: 2px; }
+.scope-head span:last-child { color: var(--muted); }
+.scope canvas { display: block; width: 100%; aspect-ratio: 560 / 420; max-width: 100%; }
+.phases { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.phases li { padding: 9px 10px; color: var(--muted); transition: color .3s, background .3s; min-width: 0; }
+.phases li + li { border-left: 1px solid var(--line); }
+.phases span { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; }
+.phases b { font-weight: 500; font-size: 13px; white-space: nowrap; }
+.phases li.on { color: var(--accent); background: var(--accent-soft); }
+
+/* Sections */
+section.block { border-top: 1px solid var(--line); }
+section.block .wrap { padding-block: 56px; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.sec-head h2 { font-size: 26px; font-weight: 600; margin: 0; text-wrap: balance; }
+.sec-head .code { font-family: var(--f-mono); font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+
+.about { display: grid; grid-template-columns: 1.15fr 1fr; gap: 36px; }
+.about > * { min-width: 0; }
+.about p { margin: 0 0 14px; max-width: 34em; }
+.about .quote { font-size: 19px; line-height: 1.6; font-weight: 500; color: var(--ink); margin-bottom: 20px; text-wrap: balance; }
+.about .body p { color: var(--ink); }
+dl.facts { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; font-size: 15px; }
+dl.facts dt { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; padding-top: 3px; }
+dl.facts dd { margin: 0; }
+.fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 22px; }
+.field { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.field b { display: block; font-weight: 600; font-size: 15px; }
+.field small { color: var(--muted); font-size: 13px; }
+
+/* Research */
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+.cat { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 16px 18px; min-width: 0; }
+.cat .en { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.cat b { display: block; font-size: 17px; font-weight: 600; margin: 2px 0 4px; }
+.cat p { margin: 0; font-size: 14px; color: var(--muted); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip { font: 500 14px var(--f-body); padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.list-head { display: flex; justify-content: space-between; align-items: baseline; margin: 30px 0 0; padding-bottom: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.list-head.first { margin-top: 0; }
+ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.paper { display: grid; grid-template-columns: 110px 1fr; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.paper > * { min-width: 0; }
+.paper .meta { font-family: var(--f-mono); font-size: 12px; color: var(--muted); line-height: 1.6; font-variant-numeric: tabular-nums; }
+.paper .meta .id { color: var(--accent); display: block; font-weight: 500; }
+.paper h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; line-height: 1.45; text-wrap: balance; }
+.paper p { margin: 0 0 10px; color: var(--muted); font-size: 15px; max-width: 40em; }
+.paper .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tag { font-size: 12px; padding: 2px 9px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.paper .pdf { font-size: 13px; color: var(--muted); }
+.st { font-size: 12px; padding: 1px 9px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+.st.doing { color: var(--accent); border-color: var(--accent); }
+.empty { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+
+/* Monthly */
+.monthly { display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: start; }
+.monthly > * { min-width: 0; }
+.monthly > div > p { margin: 0 0 18px; max-width: 34em; }
+.corners { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.corners li { display: grid; grid-template-columns: 104px 1fr; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.corners li b { font-weight: 600; }
+.corners li span { color: var(--muted); }
+.issue { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 22px; }
+.issue .vol { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.issue .vol b { color: var(--accent); font-weight: 500; }
+.issue .vol span { color: var(--muted); }
+.issue h3 { margin: 12px 0 12px; font-size: 19px; font-weight: 600; }
+.issue ul { margin: 0 0 16px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.issue li { display: grid; grid-template-columns: 70px 1fr; gap: 10px; font-size: 15px; }
+.issue li span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; padding-top: 4px; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.contact > * { min-width: 0; }
+.contact ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.contact li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.contact li svg { width: 18px; height: 18px; margin-top: 4px; color: var(--accent); }
+.contact li b { display: block; font-weight: 600; }
+.contact li span { color: var(--muted); font-size: 14px; }
+.mailcard { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+.mailcard .label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+.mailcard .addr { font-family: var(--f-mono); font-size: 17px; user-select: all; word-break: break-all; }
+.mailcard .btns { gap: 8px; }
+.mailcard p { margin: 0; font-size: 14px; color: var(--muted); }
+#copyMsg { font-size: 13px; color: var(--accent); min-height: 1.4em; }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 26px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--muted); font-family: var(--f-mono); }
+
+@media (max-width: 720px) {
+  .hero .wrap, .about, .contact, .monthly, .cats { grid-template-columns: 1fr; }
+  .hero .wrap { padding-block: 40px 36px; }
+  nav { gap: 14px; }
+  .paper { grid-template-columns: 1fr; gap: 6px; }
+  .paper .meta .id { display: inline; margin-right: 8px; }
+}
+@media (max-width: 420px) {
+  .logo span { display: none; }
+  .phases li { padding: 8px 6px; }
+  .phases b { font-size: 12px; }
+  .corners li { grid-template-columns: 1fr; gap: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="OrbitCraft 처음으로">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><ellipse cx="12" cy="12" rx="10.5" ry="4.5" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-25 12 12)"/></svg>
+      <span>OrbitCraft</span>
+    </a>
+    <nav>
+      <a href="#about">소개</a>
+      <a href="#research">연구</a>
+      <a href="#monthly">월간지</a>
+      <a href="#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Aerospace Research</div>
+        <h1>OrbitCraft</h1>
+        <p class="lead"><strong>발사체가 궤도에 오르는 궤적</strong>과 그 힘을 만드는 <strong>엔진</strong>, 우주를 견디는 <strong>복합재와 적층제조 부품의 품질</strong>까지. 우주로 나아가는 데 필요한 기술을 직접 계산하고 분석합니다.</p>
+        <div class="btns">
+          <a class="btn primary" href="#research">연구 보기</a>
+          <a class="btn" href="#contact">문의 · 섭외</a>
+        </div>
+      </div>
+      <figure class="scope" aria-label="발사체가 지상에서 출발해 궤도에 진입하는 과정을 보여주는 그림">
+        <div class="scope-head"><span>LAUNCH TO ORBIT</span><span>발사체가 궤도에 오르는 과정</span></div>
+        <canvas id="orbit" width="560" height="420"></canvas>
+        <ol class="phases" id="phases">
+          <li><span>01</span><b>이륙</b></li>
+          <li><span>02</span><b>1단 분리</b></li>
+          <li><span>03</span><b>2단 분리</b></li>
+          <li><span>04</span><b>궤도 진입</b></li>
+        </ol>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head"><h2>소개</h2><span class="code">01 · ABOUT</span></div>
+      <div class="about">
+        <div class="body">
+          <p class="quote">우리는 어떻게 태어났고, 어떻게 이곳에 존재하게 되었을까.</p>
+          <p>밤하늘의 별과 행성을 바라보면 늘 이 질문으로 돌아옵니다. 그 답은 지구 밖, 아직 닿지 못한 우주 어딘가에 있다고 믿습니다.</p>
+          <p>OrbitCraft는 그곳으로 나아가기 위한 도전입니다. 사람과 장비를 우주로 보내는 발사체와 엔진, 극한 환경을 견디는 복합재 구조와 제조 기술, 궤도 위에서 임무를 수행하는 인공위성, 그리고 언젠가 닿고자 하는 행성까지. 우주로 가는 길에 필요한 기술을 하나씩 조사하고, 계산하고, 기록합니다.</p>
+          <p>작은 연구 한 편이 우주로 향하는 긴 여정의 첫 계단이 되기를 바랍니다.</p>
+        </div>
+        <div>
+          <dl class="facts">
+            <dt>Name</dt><dd>문현빈</dd>
+            <dt>School</dt><dd>경상국립대학교 항공우주공학부</dd>
+            <dt>Status</dt><dd>학부 재학</dd>
+          </dl>
+          <div class="fields">
+            <div class="field"><b>발사체</b><small>궤적 · 추진 · 엔진</small></div>
+            <div class="field"><b>복합재 구조</b><small>탄소섬유 · 적층제조 · 품질</small></div>
+            <div class="field"><b>인공위성</b><small>자세제어 · 궤도역학</small></div>
+            <div class="field"><b>행성과학</b><small>대기 · 지질 · 생명체</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="research">
+    <div class="wrap">
+      <div class="sec-head"><h2>연구</h2><span class="code">02 · RESEARCH</span></div>
+      <div class="cats">
+        <div class="cat">
+          <div class="en">Launch Vehicles</div>
+          <b>발사체</b>
+          <p>발사체가 지상에서 궤도까지 오르는 궤적과 비행 과정을 시뮬레이션합니다.</p>
+        </div>
+        <div class="cat">
+          <div class="en">Propulsion</div>
+          <b>추진 · 엔진</b>
+          <p>로켓 엔진과 제트엔진이 추력을 만드는 원리와 성능을 계산합니다.</p>
+        </div>
+        <div class="cat">
+          <div class="en">Manufacturing &amp; Quality</div>
+          <b>제조 · 품질</b>
+          <p>복합재와 금속 적층제조 부품의 결함을 찾고, 왜 생기는지 분석합니다.</p>
+        </div>
+        <div class="cat">
+          <div class="en">Spacecraft</div>
+          <b>인공위성</b>
+          <p>궤도 위의 위성이 자세를 잡고 임무를 수행하는 원리를 연구합니다.</p>
+        </div>
+      </div>
+      <div class="filters" role="group" aria-label="분야별 보기">
+        <button class="chip" id="f-all" data-f="all" aria-pressed="true">전체</button>
+        <button class="chip" id="f-launch" data-f="발사체" aria-pressed="false">발사체</button>
+        <button class="chip" id="f-prop" data-f="추진 · 엔진" aria-pressed="false">추진 · 엔진</button>
+        <button class="chip" id="f-mfg" data-f="제조 · 품질" aria-pressed="false">제조 · 품질</button>
+        <button class="chip" id="f-sat" data-f="인공위성" aria-pressed="false">인공위성</button>
+      </div>
+      <div class="list-head first"><span>완성된 논문</span><span id="n-done"></span></div>
+      <ol class="papers" id="list-done"></ol>
+      <div class="list-head"><span>진행 중인 연구</span><span id="n-doing"></span></div>
+      <ol class="papers" id="list-doing"></ol>
+    </div>
+  </section>
+
+  <section class="block" id="monthly">
+    <div class="wrap">
+      <div class="sec-head"><h2>월간 OrbitCraft</h2><span class="code">03 · MONTHLY</span></div>
+      <div class="monthly">
+        <div>
+          <p>매달 한 번, 우주에 관한 이야기와 자료를 모아 신문처럼 발행합니다. 한 달 동안 읽고 공부한 내용을 뉴스레터 형식으로 정리해 이곳에 올립니다.</p>
+          <ul class="corners">
+            <li><b>행성 탐구</b><span>행성의 대기와 지질, 내부 구조</span></li>
+            <li><b>생명의 흔적</b><span>외계 생명체와 미생물이 존재할 수 있는 조건</span></li>
+            <li><b>탐사선 일대기</b><span>탐사선의 발사부터 임무 종료까지의 이야기와 자료</span></li>
+            <li><b>우주 환경</b><span>우주쓰레기, 우주 날씨처럼 궤도 위에서 벌어지는 일</span></li>
+            <li><b>이달의 우주</b><span>한 달 동안의 발사, 탐사, 연구 소식</span></li>
+          </ul>
+        </div>
+        <article class="issue">
+          <div class="vol"><b>VOL. 01</b><span>2026.12 · 발행 예정</span></div>
+          <h3>창간호</h3>
+          <ul>
+            <li><span>Planet</span>행성 대기를 분석하는 방법</li>
+            <li><span>Life</span>외계 미생물은 어떻게 찾을까</li>
+            <li><span>Probe</span>보이저 1호의 일대기</li>
+            <li><span>News</span>12월의 우주 소식</li>
+          </ul>
+          <span class="st">준비 중</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="sec-head"><h2>문의 · 섭외</h2><span class="code">04 · CONTACT</span></div>
+      <div class="contact">
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19h16M6 15l4-8 4 5 4-7"/></svg><div><b>연구 관련 질문</b><span>논문 내용, 자료 출처, 계산 방법 등</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.5 1.5-4.5 4-4.5"/></svg><div><b>공동 연구 · 스터디</b><span>함께 프로젝트를 진행하고 싶을 때 연락 주세요. 주제는 무엇이든 환영합니다.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4"/></svg><div><b>발표 · 섭외</b><span>학교 세미나, 고등학교 강연, 행사 발표, 동아리 활동 등 발표 요청을 받습니다.</span></div></li>
+        </ul>
+        <div class="mailcard">
+          <div class="label">E-mail</div>
+          <div class="addr" id="addr">gnumun1012@gmail.com</div>
+          <div class="btns">
+            <button class="btn" id="copyBtn" type="button">주소 복사</button>
+            <a class="btn" href="mailto:gnumun1012@gmail.com">메일 쓰기</a>
+          </div>
+          <div id="copyMsg" aria-live="polite"></div>
+          <p>메일 제목에 [문의] 또는 [섭외]를 붙여 주시면 더 빠르게 확인합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 OrbitCraft · 문현빈</span>
+    <span>Launch · Orbit · Explore</span>
+  </div>
+</footer>
+
+<script>
+// 연구 목록. 상태(s): "done" 완성 / "doing" 진행 중 / "plan" 준비 중
+// 분야(f): "발사체" / "추진 · 엔진" / "제조 · 품질" / "인공위성"
+// 논문이 완성되면 s를 "done"으로 바꾸고 date와 pdf를 채우면 됩니다.
+const papers = [
+  { id: "OC-L01", f: "발사체", s: "doing", t: "파이썬을 이용한 누리호 발사 궤적 시뮬레이션",
+    a: "로켓 방정식, 중력 선회, 공기저항, 단 분리를 반영해 누리호의 상승 궤적을 계산하고 공개된 실제 비행 기록과 비교합니다." },
+  { id: "OC-P01", f: "추진 · 엔진", s: "plan", t: "누리호 75톤 엔진의 고도별 성능 계산",
+    a: "노즐 팽창비와 고도에 따른 추력, 비추력 변화를 계산해 공개된 엔진 성능과 비교할 예정입니다." },
+  { id: "OC-M01", f: "제조 · 품질", s: "doing", t: "탄소섬유 3D프린팅 공정의 결함 유형 분류와 발생 메커니즘 분석",
+    a: "기공, 층간 박리, 섬유 정렬 불량 같은 결함을 유형별로 정리하고 각 결함이 생기는 원인과 해결 방법을 분석합니다." },
+  { id: "OC-M02", f: "제조 · 품질", s: "plan", t: "층별 영상 기반 금속적층제조 이상 탐지 및 검사 지원 에이전트 개발",
+    a: "적층 과정에서 촬영한 층별 영상으로 이상을 찾아내고, 검사자를 돕는 AI 에이전트를 만들 예정입니다." }
+];
+const label = { doing: "진행 중", plan: "준비 중" };
+function item(p) {
+  const li = document.createElement("li");
+  li.className = "paper";
+  const right = p.s === "done"
+    ? (p.pdf ? `<a class="pdf" href="${p.pdf}">PDF 보기</a>` : `<span class="pdf">PDF 준비 중</span>`)
+    : `<span class="st ${p.s}">${label[p.s]}</span>`;
+  li.innerHTML = `<div class="meta"><span class="id">${p.id}</span>${p.date || "2026"}</div>
+    <div><h3>${p.t}</h3><p>${p.a}</p>
+    <div class="row"><span class="tag">${p.f}</span>${right}</div></div>`;
+  return li;
+}
+function render(f) {
+  const shown = papers.filter(p => f === "all" || p.f === f);
+  const done = shown.filter(p => p.s === "done");
+  const doing = shown.filter(p => p.s !== "done").sort((a, b) => (a.s === "doing" ? 0 : 1) - (b.s === "doing" ? 0 : 1));
+  const ld = document.getElementById("list-done"), lg = document.getElementById("list-doing");
+  ld.innerHTML = ""; lg.innerHTML = "";
+  if (done.length) done.forEach(p => ld.appendChild(item(p)));
+  else ld.innerHTML = `<li class="empty">첫 번째 논문을 준비하고 있습니다. 완성되면 이곳에 PDF와 함께 올라옵니다.</li>`;
+  if (doing.length) doing.forEach(p => lg.appendChild(item(p)));
+  else lg.innerHTML = `<li class="empty">이 분야의 연구를 준비하고 있습니다.</li>`;
+  document.getElementById("n-done").textContent = done.length + "편";
+  document.getElementById("n-doing").textContent = doing.length + "건";
+}
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b ? "true" : "false"));
+  render(b.dataset.f);
+}));
+render("all");
+
+// Copy e-mail
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const el = document.getElementById("addr");
+  const msg = document.getElementById("copyMsg");
+  const fallback = () => {
+    const r = document.createRange(); r.selectNodeContents(el);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    msg.textContent = "주소를 선택했습니다. 길게 눌러 복사하세요.";
+  };
+  try {
+    navigator.clipboard.writeText(el.textContent.trim()).then(() => { msg.textContent = "복사했습니다."; }, fallback);
+  } catch (e) { fallback(); }
+});
+
+// Launch-to-orbit figure
+(function () {
+  const cv = document.getElementById("orbit");
+  const ctx = cv.getContext("2d");
+  const W = cv.width, H = cv.height;
+  const ex = W / 2, ey = H + 640, R = 700, HO = 230;   // Earth centre far below, orbit HO px above surface
+  const P0 = -0.33, P1 = 0.06;                          // launch angle → orbit insertion angle
+  const marks = [0, 0.3, 0.68, 1];                      // 이륙, 1단 분리, 2단 분리, 궤도 진입
+  const phaseEls = document.querySelectorAll("#phases li");
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const pol = (r, p) => [ex + r * Math.sin(p), ey - r * Math.cos(p)];
+  const traj = u => pol(R + HO * (1 - Math.pow(1 - u, 2.4)), P0 + (P1 - P0) * Math.pow(u, 1.7));
+  const stars = Array.from({ length: 34 }, (_, i) => [(i * 137.5 + 20) % W, (i * 61.7 + 15) % (H - 150), (i % 3) * 0.35 + 0.6]);
+  let lastPhase = -1;
+
+  function setPhase(i) {
+    if (i === lastPhase) return;
+    lastPhase = i;
+    phaseEls.forEach((el, k) => el.classList.toggle("on", k === i));
+  }
+
+  function path(u0, u1, n) {
+    ctx.beginPath();
+    for (let k = 0; k <= n; k++) {
+      const [x, y] = traj(u0 + (u1 - u0) * k / n);
+      k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+  }
+
+  function draw(u, coast) {
+    const ink = css("--ink"), orbit = css("--orbit"), accent = css("--accent"), earth = css("--earth"),
+          muted = css("--muted"), panel = css("--panel");
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.fillStyle = muted; ctx.globalAlpha = .4;
+    stars.forEach(([x, y, r]) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); });
+    ctx.globalAlpha = 1;
+
+    // target orbit
+    ctx.strokeStyle = orbit; ctx.lineWidth = 1.5; ctx.setLineDash([5, 6]);
+    ctx.beginPath(); ctx.arc(ex, ey, R + HO, -Math.PI / 2 - 0.5, -Math.PI / 2 + 0.5); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = "500 17px 'IBM Plex Sans KR', sans-serif"; ctx.fillStyle = muted; ctx.textAlign = "right";
+    const [lx, ly] = pol(R + HO + 16, 0.24); ctx.fillText("목표 궤도", lx, ly);
+
+    // Earth + atmosphere
+    ctx.fillStyle = earth; ctx.globalAlpha = .14;
+    ctx.beginPath(); ctx.arc(ex, ey, R + 22, 0, 7); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.beginPath(); ctx.arc(ex, ey, R, 0, 7); ctx.fill();
+    ctx.fillStyle = panel; ctx.globalAlpha = .9; ctx.textAlign = "center";
+    ctx.fillText("지구", ex, ey - R + 34); ctx.globalAlpha = 1;
+
+    // planned ascent path, then flown part
+    ctx.strokeStyle = orbit; ctx.lineWidth = 1.5; ctx.setLineDash([3, 5]);
+    path(0, 1, 60); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = accent; ctx.lineWidth = 2.5;
+    path(0, u, 60); ctx.stroke();
+    if (coast > P1) { ctx.beginPath(); ctx.arc(ex, ey, R + HO, P1 - Math.PI / 2, coast - Math.PI / 2); ctx.stroke(); }
+
+    // phase markers
+    marks.forEach(m => {
+      const [x, y] = traj(m), hit = u >= m;
+      ctx.beginPath(); ctx.arc(x, y, 5, 0, 7);
+      ctx.fillStyle = hit ? accent : panel; ctx.fill();
+      ctx.strokeStyle = hit ? accent : orbit; ctx.lineWidth = 1.5; ctx.stroke();
+    });
+
+    // vehicle
+    const [vx, vy] = coast > P1 ? pol(R + HO, coast) : traj(u);
+    ctx.fillStyle = accent; ctx.globalAlpha = .18;
+    ctx.beginPath(); ctx.arc(vx, vy, 13, 0, 7); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = ink; ctx.beginPath(); ctx.arc(vx, vy, 5, 0, 7); ctx.fill();
+
+    let ph = 0; marks.forEach((m, i) => { if (u >= m) ph = i; });
+    setPhase(ph);
+  }
+
+  const ASC = 5200, COAST = 2600, HOLD = 900;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) {
+    const still = () => draw(1, P1 + 0.12);
+    still();
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", still);
+    new MutationObserver(still).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return;
+  }
+  let t0 = performance.now();
+  function loop(now) {
+    let t = (now - t0) % (ASC + COAST + HOLD);
+    if (t < ASC) { const s = t / ASC; draw(s * s * (3 - 2 * s) * 0.15 + s * 0.85, 0); }
+    else if (t < ASC + COAST) draw(1, P1 + (0.42 - P1) * (t - ASC) / COAST);
+    else draw(1, 0.42);
+    requestAnimationFrame(loop);
+  }
+  draw(0, 0);
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
