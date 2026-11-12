@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>다시, 달로 · 월간 OrbitCraft VOL.01</title>
+<meta name="description" content="월간 OrbitCraft 창간호. 우리는 왜 다시 달에 가는가, 그리고 대한민국의 도전.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Layout: newsletter article on a 700px reading column; masthead band, then body with
+   full-column figures, one table and a timeline diagram. Same tokens as the main site. */
+:root {
+  --paper: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #0f1b2d;
+  --muted: #5a6779;
+  --line: #d9dfe7;
+  --accent: #d4500f;
+  --accent-soft: #fbe9df;
+
+  --f-display: "Chakra Petch", "IBM Plex Sans KR", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0b1220; --panel: #121c2e; --ink: #e6ebf2; --muted: #93a0b3;
+    --line: #233149; --accent: #ff8a46; --accent-soft: #2d1d15;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0b1220; --panel: #121c2e; --ink: #e6ebf2; --muted: #93a0b3;
+  --line: #233149; --accent: #ff8a46; --accent-soft: #2d1d15;
+  color-scheme: dark;
+}
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.85;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap {
+  max-width: 740px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+header.top { border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 14px; max-width: 880px; }
+.logo { font-family: var(--f-display); font-weight: 600; font-size: 18px; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.logo svg { width: 20px; height: 20px; }
+.back { font-size: 14px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--ink); }
+
+.mast { border-bottom: 1px solid var(--line); }
+.mast .wrap { padding-block: 48px 36px; }
+.issue-line { display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.issue-line b { color: var(--accent); font-weight: 500; }
+.mast h1 { font-size: clamp(30px, 5.4vw, 44px); line-height: 1.3; font-weight: 600; margin: 18px 0 8px; text-wrap: balance; letter-spacing: -.01em; }
+.mast .sub { font-size: clamp(19px, 3vw, 23px); color: var(--muted); margin: 0 0 22px; font-weight: 500; }
+.byline { font-size: 14px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; }
+.byline span + span::before { content: "·"; margin-right: 10px; }
+
+article .wrap { padding-block: 40px 24px; }
+article p { margin: 0 0 1.2em; }
+article .lede { font-size: 19px; line-height: 1.8; }
+article h2 { font-size: 25px; font-weight: 600; margin: 2.4em 0 .8em; padding-top: 1.2em; border-top: 1px solid var(--line); line-height: 1.4; text-wrap: balance; }
+article h3 { font-size: 19px; font-weight: 600; margin: 1.8em 0 .5em; line-height: 1.5; }
+article strong { font-weight: 600; }
+article ul { margin: 0 0 1.4em; padding-left: 1.2em; }
+article li { margin-bottom: .6em; }
+article li::marker { color: var(--accent); }
+.src { color: var(--muted); font-size: .82em; white-space: nowrap; }
+.src a { text-decoration-color: var(--line); text-underline-offset: 3px; }
+.src a:hover { color: var(--accent); }
+
+figure { margin: 2em 0; }
+figure img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+
+.table-wrap { overflow-x: auto; margin: 1.6em 0; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; line-height: 1.6; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font-weight: 600; background: var(--accent-soft); }
+td:first-child { font-family: var(--f-mono); font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+.tl-wrap { overflow-x: auto; margin: 1.6em 0 .6em; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.timeline { display: block; width: 100%; min-width: 600px; height: auto; font-family: var(--f-body); }
+.t-ink { fill: var(--ink); }
+.t-quiet { fill: var(--muted); }
+.f-edge { fill: var(--muted); }
+.s-edge { stroke: var(--muted); }
+.s-grid { stroke: var(--line); }
+.hi { fill: var(--accent-soft); stroke: var(--accent); }
+.note { font-size: 14px; color: var(--muted); }
+
+.sources h3 { font-size: 15px; margin: 1.6em 0 .4em; }
+.sources ul { font-size: 14px; line-height: 1.7; padding-left: 1.1em; }
+.sources li { margin-bottom: .3em; }
+.sources a { text-underline-offset: 3px; text-decoration-color: var(--line); }
+
+footer { border-top: 1px solid var(--line); margin-top: 40px; }
+footer .wrap { padding-block: 26px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); max-width: 880px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  article .lede { font-size: 17px; }
+  article h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html#monthly" aria-label="OrbitCraft 홈으로">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><ellipse cx="12" cy="12" rx="10.5" ry="4.5" stroke="var(--accent)" stroke-width="1.6" transform="rotate(-25 12 12)"/></svg>
+      <span>OrbitCraft</span>
+    </a>
+    <a class="back" href="../index.html#monthly">← 월간지 목록</a>
+  </div>
+</header>
+
+<section class="mast">
+  <div class="wrap">
+    <div class="issue-line"><b>월간 OrbitCraft</b><span>VOL. 01 · 창간호</span><span>2026.11</span></div>
+    <h1>우리는 왜 다시 달에 가는가</h1>
+    <p class="sub">대한민국의 도전</p>
+    <div class="byline"><span>문현빈</span><span>2026년 11월 12일</span></div>
+  </div>
+</section>
+
+<article>
+  <div class="wrap">
+    <p class="lede">2026년 4월, 네 명의 우주비행사가 1972년 아폴로 17호 이후 처음으로 달을 향해 날아갔습니다. 아르테미스 2호는 달 뒤편을 돌아 무사히 지구로 돌아왔고, NASA는 2028년 달 착륙을 목표로 다음 단계를 준비하고 있습니다.</p>
+    <p>그런데 지난 10월, 계획이 다시 바뀌었습니다. 다음 임무인 3호는 달이 아니라 지구 궤도에서 착륙선을 시험합니다. 이번 창간호에서는 인류가 왜 다시 달로 가는지, 지금 어디까지 왔는지, 그리고 한국은 무엇을 하고 있는지 정리했습니다.</p>
+
+    <h2>왜 다시 달인가?</h2>
+    <p>아르테미스의 목표는 아폴로처럼 달에 '다녀오는' 것이 아닙니다. 달 남극에 사람이 머무는 기지를 세우고, 그 경험을 발판 삼아 화성까지 가는 것입니다. 이름도 그리스 신화 속 아폴론의 쌍둥이 누이, 아르테미스에서 따왔습니다.</p>
+    <p>왜 달에 가는 것일까?</p>
+    <ul>
+      <li><strong>머무르기 위해</strong>: 아폴로는 며칠짜리 방문이었습니다. NASA는 이번에는 달 남극에 사람이 계속 머무는 '문 베이스(Moon Base)'를 짓겠다고 밝혔습니다. <span class="src">(<a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">NASA</a>)</span></li>
+      <li><strong>화성으로 가는 발판</strong>: 지구에서 사흘 거리인 달에서 장기 체류 기술을 먼저 익히고, 이를 첫 유인 화성 탐사의 기반으로 삼는다는 계획입니다. <span class="src">(<a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">NASA</a>)</span></li>
+      <li><strong>과학</strong>: 달 남극에는 38억 5천만 년 넘게 거의 변하지 않은 지형과 거대한 남극-에이트켄 분지가 있습니다. 태양계 초기 역사를 읽을 수 있는 단서입니다. <span class="src">(<a href="https://starlust.org/why-is-the-moons-south-pole-central-to-nas-as-plans-for-a-crewed-landing-and-a-lunar-base/" target="_blank" rel="noopener">Starlust</a>)</span></li>
+      <li><strong>경쟁</strong>: 냉전 시기, 우주 탐사의 상대가 소련이었다면, 지금은 중국입니다. NASA의 국장 재러드 아이작먼은 그동안 우주탐사의 진행이 더뎌 중국과의 경쟁이 필요 이상으로 치열할것이라 말했습니다. <span class="src">(<a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP</a>)</span></li>
+    </ul>
+
+    <h2>달에 가서 무엇을 하나?</h2>
+    <p>핵심은 남극의 얼음입니다. 달 남극에서는 태양이 늘 지평선 가까이 낮게 떠 있어서, 깊은 크레이터 바닥은 수십억 년 동안 햇빛이 한 번도 닿지 않았습니다. 이 '영구음영지역'에 얼음이 갇혀 있을 가능성이 높습니다.</p>
+    <p>얼음은 녹이면 마실 물이 되고, 분해하면 숨 쉴 산소와 로켓 연료(수소·산소)가 됩니다. 지구에서 모든 물자를 실어 나르지 않아도 되니 기지 운영의 키포인트(Key point)입니다. 반대로 높은 지대는 햇빛이 거의 끊이지 않아 태양광 발전에 유리합니다. NASA는 이런 조건을 갖춘 남극 후보 착륙 지역 13곳을 골라 두었습니다. <span class="src">(<a href="https://www.cbsnews.com/amp/news/nasa-moon-landing-artemis-lunar-south-pole" target="_blank" rel="noopener">CBS News</a>)</span></p>
+    <p>11월 7일 NASA가 발표한 문 베이스 계획에는 사람보다 먼저 보낼 장비들이 담겼습니다. <span class="src">(<a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <ul>
+      <li><strong>무인 착륙선</strong>: SpaceX, 블루오리진 등 민간 기업 8곳을 선정했습니다. 10년간 최대 100억 달러 규모로 장비와 과학 기기를 달에 배달합니다.</li>
+      <li><strong>원자력 로버 PROMISE</strong>: 바퀴 6개짜리 탐사차로, 약 1m 깊이까지 땅을 뚫어 얼음을 분석합니다. 긴 달의 밤과 그늘진 크레이터 안에서도 움직일 수 있습니다. 2028년 말 발사, 18개월 임무가 목표입니다.</li>
+      <li><strong>전력·통신 타워</strong>: 태양전지판, 배터리, 무선 전력 전송 장치를 묶은 소형 타워를 세울 계획입니다.</li>
+    </ul>
+    <figure>
+      <img src="img/vol01-1.jpg" width="1400" height="784" loading="lazy" alt="NASA가 구상하는 달 남극 문 베이스 상상도">
+      <figcaption>NASA가 구상하는 달 남극 '문 베이스' 상상도 (사진: NASA)</figcaption>
+    </figure>
+    <p>아이작먼 국장은 우주비행사가 도착할 때 기지의 첫 부품들이 이미 달 표면에서 기다리고 있게 하겠다고 말했습니다. 첫 착륙팀이 탈 월면차도 미리 보내둔다는 구상입니다. <span class="src">(<a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP</a>)</span></p>
+
+    <h2>지금까지의 여정</h2>
+    <p>아르테미스는 지금까지 무인 시험비행(1호)과 유인 달 선회비행(2호), 두 단계를 마쳤습니다. 둘 다 달에 내리지 않고 주위를 돌아오는 비행이었습니다.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>아르테미스 1호</th><th>아르테미스 2호</th></tr></thead>
+        <tbody>
+          <tr><td>기간</td><td>2022년 11월 16일 ~ 12월 11일 (약 25.5일)</td><td>2026년 4월 1일 ~ 4월 10일 (9일 1시간 32분)</td></tr>
+          <tr><td>탑승</td><td>무인 (센서를 단 마네킹)</td><td>우주비행사 4명</td></tr>
+          <tr><td>핵심 시험</td><td>로켓(SLS)과 우주선(오리온), 열차폐막</td><td>생명유지장치 등 사람이 탄 상태의 모든 시스템</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="img/vol01-2.jpg" width="1400" height="715" loading="lazy" alt="아르테미스 2호를 실은 SLS 로켓 발사 장면">
+      <figcaption>2026년 4월 1일, 아르테미스 2호를 실은 SLS 로켓이 케네디 우주센터에서 발사되는 모습 (사진: NASA/Aubrey Gemignani)</figcaption>
+    </figure>
+
+    <h3>1호: 숙제를 남긴 성공</h3>
+    <p>1호는 거대 로켓 SLS의 첫 비행이었습니다. 가장 중요한 시험은 시속 약 4만 km로 대기권에 다시 들어올 때 약 2,760°C를 견디는 열차폐막이었습니다. <span class="src">(<a href="https://www.nasa.gov/?p=320430" target="_blank" rel="noopener">NASA</a>)</span> 오리온은 무사히 돌아왔지만, 열차폐막이 예상과 다르게 깎이고 갈라진 사실이 확인됐습니다. 이 때문에 2호의 재진입 방식이 바뀌고 일정도 미뤄졌습니다. <span class="src">(<a href="https://livescience.com/space/space-exploration/nasa-shares-incredible-footage-of-artemis-i-capsule-hurtling-through-earths-atmosphere-after-historic-moon-voyage" target="_blank" rel="noopener">Live Science</a>)</span></p>
+
+    <h3>2호: 54년 만의 유인 달 비행</h3>
+    <p>2호는 한국시간으로 4월 2일 아침 미국 플로리다에서 발사됐습니다. 사령관 리드 와이즈먼, 조종사 빅터 글로버, 크리스티나 코크(이상 NASA), 제러미 핸슨(캐나다우주국)이 탔습니다. 글로버는 달을 돈 첫 유색인종, 코크는 첫 여성, 핸슨은 첫 비미국인입니다. <span class="src">(<a href="https://www.aljazeera.com/news/2026/4/6/artemis-ii-breaks-record-for-the-furthest-human-travel-from-earth" target="_blank" rel="noopener">Al Jazeera</a>)</span></p>
+    <ul>
+      <li><strong>인류 최장 거리</strong>: 4월 6일, 1970년 아폴로 13호가 세운 약 40만 km 기록을 넘어 약 40만 6천 km까지 나갔습니다. <span class="src">(<a href="https://www.aljazeera.com/news/2026/4/6/artemis-ii-breaks-record-for-the-furthest-human-travel-from-earth" target="_blank" rel="noopener">Al Jazeera</a>)</span></li>
+      <li><strong>달 뒤편 통과</strong>: 달 표면 약 6,550km 위를 지났고, 달 뒤에 가려진 약 40분 동안은 지구와 교신이 끊겼습니다. <span class="src">(<a href="https://www.fox29.com/news/artemis-ii-space-record-breaks-apollo-13-distance" target="_blank" rel="noopener">FOX</a>)</span></li>
+      <li><strong>지구가 지는 사진</strong>: 승무원들은 달 너머로 지구가 지는 장면을 찍었습니다. 1968년 아폴로 8호의 '지구돋이' 사진을 떠올리게 한 장면입니다. <span class="src">(<a href="https://news.wttw.com/2026/04/10/artemis-ii-astronauts-return-moon-splashdown-close-out-record-breaking-lunar-voyage" target="_blank" rel="noopener">AP/WTTW</a>)</span></li>
+      <li><strong>귀환</strong>: 시속 약 3만 9,700km로 대기권에 진입해 4월 10일 미국 샌디에이고 앞바다에 내려앉았고, 네 명 모두 무사했습니다. <span class="src">(<a href="https://news.wttw.com/2026/04/10/artemis-ii-astronauts-return-moon-splashdown-close-out-record-breaking-lunar-voyage" target="_blank" rel="noopener">AP/WTTW</a>, <a href="https://www.foxweather.com/earth-space/artemis-ii-capsule-splashes-down-closing-one-mission-ushering-new-era-human-spaceflight" target="_blank" rel="noopener">Fox Weather</a>)</span></li>
+    </ul>
+    <figure>
+      <img src="img/vol01-3.jpg" width="1400" height="933" loading="lazy" alt="오리온 창밖으로 찍은 지구가 지는 장면">
+      <figcaption>2026년 4월 6일, 아르테미스 2호 승무원이 오리온 창밖으로 찍은 '지구가 지는' 장면 (사진: NASA)</figcaption>
+    </figure>
+    <p>순탄하기만 한 과정은 아니었습니다. 발사 두 달 전인 2월에도 연료 주입 시범 중 수소가 새어 로켓을 조립동으로 되돌려야 했습니다. <span class="src">(<a href="https://thespacereview.com/article/5171/1" target="_blank" rel="noopener">The Space Review</a>)</span></p>
+
+    <h2>앞으로의 계획: 왜 바로 착륙하지 않을까</h2>
+    <p>원래 계획에서는 3호가 달에 착륙하는 임무였습니다. 하지만 NASA는 2026년 2월, 착륙선 개발이 늦어지자 착륙 전에 지구 궤도에서 한 번 더 시험하기로 했습니다. 그래서 첫 착륙은 4호(2028년)로 넘어갔습니다. <span class="src">(<a href="https://www.cbsnews.com/news/nasa-artemis-moon-program-overhaul" target="_blank" rel="noopener">CBS News</a>, <a href="https://www.discovermagazine.com/major-changes-to-nasa-s-artemis-iii-and-artemis-iv-missions-to-the-moon-48771" target="_blank" rel="noopener">Discover</a>)</span></p>
+    <h3>아르테미스 3호 (2027년 여름 목표)</h3>
+    <ul>
+      <li>우주비행사 4명(NASA 3명, 이탈리아 1명)이 오리온을 타고 지구 궤도에 약 2주간 머뭅니다.</li>
+      <li>로켓 세 대를 연달아 쏘아 올립니다. 오리온은 고도 약 435km에서 블루오리진의 착륙선과 먼저 도킹하고, 이어 조금 더 낮은 궤도에서 SpaceX의 스타십과 도킹합니다.</li>
+      <li>첫 착륙 때 입을, 더 가볍고 단순한 '단기 탐사용 우주복'도 시험할 예정입니다.</li>
+    </ul>
+    <p class="src">(<a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP</a>, <a href="https://www.nasa.gov/blogs/missions/2026/10/23/nasa-shares-artemis-acceleration-plans-for-moon-missions/" target="_blank" rel="noopener">NASA</a>)</p>
+    <h3>아르테미스 4호 (2028년 목표): 첫 착륙</h3>
+    <p>아폴로 이후 처음으로 사람이 달 남극에 내립니다. 착륙선을 SpaceX와 블루오리진 중 어느 쪽으로 할지는 3호 시험 결과를 본 뒤 최대한 늦게 정하기로 했습니다. <span class="src">(<a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP</a>)</span> NASA는 3·4·5호를 모두 2028년 말 이전에 쏘겠다는 목표를 세웠습니다. <span class="src">(<a href="https://spaceflightnow.com/?p=72696" target="_blank" rel="noopener">Spaceflight Now</a>)</span></p>
+    <h3>속도를 높이는 이유, 그리고 걱정</h3>
+    <p>아이작먼 국장은 아폴로 7호 귀환부터 아폴로 11호 착륙까지 9개월밖에 걸리지 않았던 시절의 속도를 되찾겠다고 말했습니다. <span class="src">(<a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP</a>)</span> 다만 일정은 이미 여러 번 흔들렸습니다. 3호는 5월에 '2027년 말'로 밀렸다가 10월에 다시 '2027년 여름'이 목표로 제시됐고, 새 우주복의 첫 비행용 제품은 2028년 상반기에나 나올 예정입니다. <span class="src">(<a href="https://www.iflscience.com/artemis-iii-has-already-been-pushed-back-to-late-2027-just-2-months-after-nasa-announced-ambitious-new-moon-plan-83377" target="_blank" rel="noopener">IFLScience</a>, <a href="https://www.ecoticias.com/en/?p=53169" target="_blank" rel="noopener">ECONEWS</a>)</span></p>
+
+    <h2>SpaceX는 무엇을 했나</h2>
+    <p>SpaceX는 아르테미스에서 우주비행사를 달 궤도에서 표면까지 내려주는 '착륙선'을 맡았습니다. 오리온이 달까지 가는 택시라면, 스타십은 마지막 구간을 책임지는 엘리베이터인 셈입니다.</p>
+    <ul>
+      <li><strong>2021년 4월, 착륙선 계약</strong>: NASA는 블루오리진·다이네틱스를 제치고 SpaceX의 스타십을 첫 유인 착륙선으로 골랐습니다. 계약 규모는 약 29억 달러로, 경쟁사보다 훨씬 저렴한 입찰가가 결정적이었습니다. 사람을 태우기 전에 무인으로 달 착륙을 먼저 증명하는 조건이 붙었습니다. <span class="src">(<a href="https://www.nationalgeographic.com/science/article/nasa-selects-spacex-to-build-the-lunar-lander-for-artemis-missions-to-the-moon" target="_blank" rel="noopener">National Geographic</a>)</span></li>
+      <li><strong>경쟁자의 등장</strong>: 이후 NASA는 두 번째 착륙선으로 2023년 블루오리진의 '블루 문'을 추가했습니다. 지금은 두 회사가 4호 착륙 자리를 두고 경쟁하는 구도입니다. <span class="src">(<a href="https://en.wikipedia.org/wiki/Starship_HLS" target="_blank" rel="noopener">Wikipedia</a>)</span></li>
+      <li><strong>폭발과 재도전의 시험비행</strong>: 스타십 전체 발사체는 2023년 4월 첫 비행에서 몇 분 만에 실패했습니다. 이후 2024년 10월에는 발사탑의 '젓가락 팔'로 돌아오는 1단 부스터를 붙잡는 데 성공했고, 2026년 9월 14번째 비행에서 처음으로 궤도에 올랐습니다. <span class="src">(<a href="https://www.space.com/space-exploration/launches-spacecraft/spacexs-starship-just-turned-10-years-old-when-will-it-go-to-mars" target="_blank" rel="noopener">Space.com</a>)</span></li>
+    </ul>
+    <figure>
+      <img src="img/vol01-4.jpg" width="1400" height="781" loading="lazy" alt="달 표면에 내려앉은 스타십 착륙선 상상도">
+      <figcaption>달 표면에 내려앉은 스타십 착륙선 상상도 (사진: SpaceX)</figcaption>
+    </figure>
+    <h3>가장 큰 숙제: 우주에서 기름 넣기</h3>
+    <p>스타십이 달까지 가려면 지구 궤도에서 연료를 가득 채워야 합니다. 연료 운반선(탱커)을 여러 번 쏘아 올려 궤도 위 '우주 주유소'를 채우고, 착륙선이 거기서 급유받는 방식입니다. <span class="src">(<a href="https://en.wikipedia.org/wiki/Starship_HLS" target="_blank" rel="noopener">Wikipedia</a>)</span></p>
+    <figure>
+      <img src="img/vol01-5.jpg" width="1400" height="734" loading="lazy" alt="지구 궤도에서 스타십 두 대가 연료를 주고받는 상상도">
+      <figcaption>지구 궤도에서 스타십 두 대가 연료를 주고받는 모습 상상도 (사진: SpaceX)</figcaption>
+    </figure>
+    <p>SpaceX는 2024년 한 우주선 안의 두 탱크 사이에서 연료를 옮겨본 적은 있지만, 우주선끼리 연료를 주고받는 시험은 아직 하지 못했습니다. 영하 180도 안팎의 극저온 연료를 무중력 상태에서 옮겨야 하는 어려운 기술입니다. <span class="src">(<a href="https://www.space.com/space-exploration/launches-spacecraft/spacexs-starship-just-turned-10-years-old-when-will-it-go-to-mars" target="_blank" rel="noopener">Space.com</a>)</span> 10월 국제우주대회에서 공개된 NASA 일정표는 이 시험을 2027년 초로 잡았습니다. <span class="src">(<a href="https://en.wikipedia.org/wiki/Starship_HLS" target="_blank" rel="noopener">Wikipedia</a>)</span></p>
+    <p>착륙선 말고도 역할은 늘고 있습니다. SpaceX는 문 베이스 화물 배송 기업 8곳에 포함됐고, 2028년에는 스타십으로 달 주변에 통신위성을 올리는 시연도 맡았습니다. <span class="src">(<a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">NASA</a>)</span></p>
+
+    <h2>한국은 무엇을 했나</h2>
+    <p>한국은 2021년 아르테미스 협정에 서명한 뒤, 달 궤도선 다누리로 아르테미스에 필요한 자료를 제공하고 2호에는 큐브위성까지 실어 보냈습니다.</p>
+    <h3>아르테미스 협정 (2021년 5월)</h3>
+    <p>아르테미스 협정은 달·화성 탐사를 평화적 목적으로, 투명하게 하고, 위급할 때 서로 돕자는 원칙을 담은 국제 약속입니다. 한국은 2021년 5월 10번째 서명국이 됐고, 지금은 수십 개국이 참여하고 있습니다. <span class="src">(<a href="https://newspim.com/news/view/20210526001014" target="_blank" rel="noopener">뉴스핌</a>, <a href="https://www.korea.kr/news/policyNewsView.do?newsId=148935674" target="_blank" rel="noopener">정책브리핑</a>)</span></p>
+    <h3>다누리: 아르테미스의 눈 (2022년~)</h3>
+    <p>한국 첫 달 탐사선 다누리는 2022년 8월 5일 SpaceX의 팰컨9 로켓에 실려 발사됐습니다. 다누리에는 NASA가 만든 '섀도캠'이 실려 있는데, 햇빛이 들지 않는 달 남극 크레이터 안을 찍는 카메라입니다. 아르테미스 착륙 후보지인 섀클턴 크레이터 내부도 이 카메라로 촬영했습니다. <span class="src">(<a href="https://www.ajunews.com/view/20230920122033546" target="_blank" rel="noopener">아주경제</a>)</span></p>
+    <figure>
+      <img src="img/vol01-6.jpg" width="985" height="985" loading="lazy" alt="섀도캠이 찍은 섀클턴 크레이터 내부">
+      <figcaption>다누리에 실린 NASA 섀도캠이 찍은 섀클턴 크레이터 내부. 햇빛이 들지 않는 곳을 지구 반사광으로 촬영했습니다 (사진: KARI/ASU/NASA)</figcaption>
+    </figure>
+    <ul>
+      <li>세계에서 네 번째로 달 표면 전체를 찍은 고해상도 지도를 완성했습니다. <span class="src">(<a href="https://newsspace.kr/news/article.html?no=8420" target="_blank" rel="noopener">뉴스스페이스</a>)</span></li>
+      <li>원래 1년짜리 임무였지만 두 번 연장돼 2027년 말까지 관측합니다. 2025년 9월부터는 연료를 거의 쓰지 않고 궤도를 유지하는 '동결궤도'에서 돌고 있습니다. <span class="src">(<a href="https://www.khan.co.kr/article/202509241203001" target="_blank" rel="noopener">경향신문</a>)</span></li>
+      <li>임무가 끝나면 고도를 착륙 수준까지 낮춰 착륙 기술을 시험한 뒤, 2028년 3월 달 표면에 충돌시킬 계획입니다. <span class="src">(<a href="https://mobile.newsis.com/view/NISX20250210_0003059502" target="_blank" rel="noopener">뉴시스</a>)</span></li>
+    </ul>
+    <h3>K-라드큐브: 아르테미스 2호에 탄 한국 위성 (2026년 4월)</h3>
+    <p>한국천문연구원과 나라스페이스가 만든 12U 크기 큐브위성 K-라드큐브가 아르테미스 2호 로켓에 함께 실렸습니다. 지구를 둘러싼 강한 방사선 띠(밴앨런대)를 지나며 방사선이 우주비행사와 반도체에 미치는 영향을 재는 임무였고, 삼성전자·SK하이닉스 반도체도 실려 있었습니다. <span class="src">(<a href="https://mobile.newsis.com/view/NISX20260129_0003494982" target="_blank" rel="noopener">뉴시스</a>, <a href="https://www.kukinews.com/article/view/kuk202505090067" target="_blank" rel="noopener">쿠키뉴스</a>)</span></p>
+    <p>위성은 발사 당일 고도 약 4만 km에서 무사히 분리됐습니다. 하지만 일부 신호만 잡혔을 뿐 관측 데이터를 주고받는 정상 교신에는 실패했고, 이후 생존 가능성이 희박하다는 발표가 나왔습니다. <span class="src">(<a href="https://mobile.newsis.com/view/NISX20260403_0003577503" target="_blank" rel="noopener">뉴시스</a>, <a href="https://mobile.newsis.com/view/NISX20260404_0003577909" target="_blank" rel="noopener">뉴시스</a>)</span> 결과는 아쉽지만, NASA의 까다로운 유인 비행 안전 기준을 통과해 국산 위성을 유인 달 탐사선에 실었다는 경험은 남았습니다.</p>
+
+    <h2>한국의 앞으로 계획</h2>
+    <p>한국의 목표는 2032년 우리 발사체로 우리 착륙선을 달에 내리는 것이고, 그 전에 2030년 민간 주도의 소형 착륙선으로 먼저 도전합니다. 장기적으로는 2045년 '달 경제기지' 구축을 내다보고 있습니다. <span class="src">(<a href="https://www.newsis.com/view/NISX20260403_0003577525" target="_blank" rel="noopener">뉴시스</a>)</span></p>
+    <ul>
+      <li><strong>2029년, 달 통신 궤도선</strong>: 누리호에 궤도수송선을 붙여 달 궤도에 통신위성을 보냅니다.</li>
+      <li><strong>2030년, 민간 소형 착륙선</strong>: 약 700kg급 착륙선을 민간기업과 함께 보내 한국의 첫 달 착륙에 도전합니다. 순수 과학보다 '달 경제' 선점이라는 산업적 목적이 크다고 우주항공청은 설명했습니다.</li>
+      <li><strong>2031년, 우주과학 탐사선</strong> 발사가 이어집니다.</li>
+    </ul>
+    <p class="src">(<a href="https://www.newsis.com/view/NISX20260703_0003695437" target="_blank" rel="noopener">뉴시스, 2026년 7월 국가우주위원회</a>)</p>
+    <h3>2032년, 착륙선 두 대</h3>
+    <p>누리호의 뒤를 잇는 차세대발사체(메탄 엔진, 재사용을 염두에 둔 설계)로 2032년 상반기에 '연착륙 검증선', 하반기에 '달 착륙선'을 보냅니다. 검증선은 부드럽게 내려앉는 기술과 달 표면 환경을, 착륙선은 정밀 착륙과 자원 탐사를 맡습니다. 우주항공청은 10월 30일 후보지 분석 결과(검증선 9곳, 착륙선 20곳)를 공개했고 올해 안에 착륙지를 정할 예정입니다. <span class="src">(<a href="https://www.koreancenter.or.kr/news/articleView.html?idxno=1432318" target="_blank" rel="noopener">연합뉴스</a>, <a href="https://www.khan.co.kr/article/202512221624001/" target="_blank" rel="noopener">경향신문</a>)</span></p>
+    <h3>NASA의 '문 베이스'에 한국이 낄 자리</h3>
+    <p>7월 서울을 찾은 NASA 문 베이스 총괄 카를로스 가르시아 갈란은 한국을 달 기지의 주요 기여국으로 꼽았습니다. 양측은 착륙선, 통신, 월면 이동체, 과학 탐사, 시료 채취 장비, 센서 분야에서 한국의 참여를 논의하고 있습니다. NASA는 2032년부터 우주비행사가 장기간 머무는 준영구 기지를 운영하는 것을 목표로 합니다. <span class="src">(<a href="https://view.asiae.co.kr/article/2026072914590589615" target="_blank" rel="noopener">아시아경제</a>)</span></p>
+
+    <h2>한눈에 보는 연표</h2>
+    <div class="tl-wrap">
+<svg class="timeline" viewBox="0 0 760 816" role="img" aria-label="미국은 2028년, 한국은 2030년 첫 달 착륙에 도전한다" font-size="13">
+<text x="24" y="30" font-size="15" font-weight="600" class="t-ink">미국은 2028년, 한국은 2030년 첫 달 착륙에 도전한다</text>
+<text x="24" y="50" font-size="11.5" class="t-quiet">아르테미스와 한국 달 탐사 연표</text>
+<circle cx="30" cy="70" r="5" class="f-edge"/><text x="42" y="74" font-size="11.5" class="t-quiet">완료</text>
+<circle cx="90" cy="70" r="5" fill="none" class="s-edge" stroke-width="1.5"/><text x="102" y="74" font-size="11.5" class="t-quiet">계획·목표</text>
+<text x="336" y="104" text-anchor="end" font-weight="600" class="t-ink">미국 · NASA</text><text x="424" y="104" font-weight="600" class="t-ink">한국</text>
+<line x1="350" x2="350" y1="114" y2="792" class="s-grid" stroke-width="1.25"/><line x1="410" x2="410" y1="114" y2="792" class="s-grid" stroke-width="1.25"/>
+<text x="24" y="124.0" font-size="11.5" class="t-quiet">2021</text><line x1="344" x2="356" y1="120.0" y2="120.0" class="s-grid"/><line x1="404" x2="416" y1="120.0" y2="120.0" class="s-grid"/>
+<text x="24" y="180.0" font-size="11.5" class="t-quiet">2022</text><line x1="344" x2="356" y1="176.0" y2="176.0" class="s-grid"/><line x1="404" x2="416" y1="176.0" y2="176.0" class="s-grid"/>
+<text x="24" y="235.9" font-size="11.5" class="t-quiet">2023</text><line x1="344" x2="356" y1="231.9" y2="231.9" class="s-grid"/><line x1="404" x2="416" y1="231.9" y2="231.9" class="s-grid"/>
+<text x="24" y="291.9" font-size="11.5" class="t-quiet">2024</text><line x1="344" x2="356" y1="287.9" y2="287.9" class="s-grid"/><line x1="404" x2="416" y1="287.9" y2="287.9" class="s-grid"/>
+<text x="24" y="348.0" font-size="11.5" class="t-quiet">2025</text><line x1="344" x2="356" y1="344.0" y2="344.0" class="s-grid"/><line x1="404" x2="416" y1="344.0" y2="344.0" class="s-grid"/>
+<text x="24" y="404.0" font-size="11.5" class="t-quiet">2026</text><line x1="344" x2="356" y1="400.0" y2="400.0" class="s-grid"/><line x1="404" x2="416" y1="400.0" y2="400.0" class="s-grid"/>
+<text x="24" y="459.9" font-size="11.5" class="t-quiet">2027</text><line x1="344" x2="356" y1="455.9" y2="455.9" class="s-grid"/><line x1="404" x2="416" y1="455.9" y2="455.9" class="s-grid"/>
+<text x="24" y="515.9" font-size="11.5" class="t-quiet">2028</text><line x1="344" x2="356" y1="511.9" y2="511.9" class="s-grid"/><line x1="404" x2="416" y1="511.9" y2="511.9" class="s-grid"/>
+<text x="24" y="572.0" font-size="11.5" class="t-quiet">2029</text><line x1="344" x2="356" y1="568.0" y2="568.0" class="s-grid"/><line x1="404" x2="416" y1="568.0" y2="568.0" class="s-grid"/>
+<text x="24" y="628.0" font-size="11.5" class="t-quiet">2030</text><line x1="344" x2="356" y1="624.0" y2="624.0" class="s-grid"/><line x1="404" x2="416" y1="624.0" y2="624.0" class="s-grid"/>
+<text x="24" y="683.9" font-size="11.5" class="t-quiet">2031</text><line x1="344" x2="356" y1="679.9" y2="679.9" class="s-grid"/><line x1="404" x2="416" y1="679.9" y2="679.9" class="s-grid"/>
+<text x="24" y="739.9" font-size="11.5" class="t-quiet">2032</text><line x1="344" x2="356" y1="735.9" y2="735.9" class="s-grid"/><line x1="404" x2="416" y1="735.9" y2="735.9" class="s-grid"/>
+<line x1="64" x2="736" y1="448.3" y2="448.3" class="s-edge" stroke-width="1" stroke-dasharray="4 4"/><text x="736" y="442.3" text-anchor="end" font-size="11.5" font-weight="600" class="t-ink">지금 2026.11</text>
+<circle cx="350" cy="136.1" r="6" class="f-edge"/>
+<text x="336" y="156.1" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2021.4</text>
+<text x="336" y="140.1" text-anchor="end" font-weight="400" class="t-ink">SpaceX 스타십, 착륙선 선정</text>
+<circle cx="410" cy="141.9" r="6" class="f-edge"/>
+<text x="424" y="161.9" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2021.5</text>
+<text x="424" y="145.9" text-anchor="start" font-weight="400" class="t-ink">아르테미스 협정 서명</text>
+<circle cx="410" cy="209.1" r="6" class="f-edge"/>
+<text x="424" y="229.1" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2022.8</text>
+<text x="424" y="213.1" text-anchor="start" font-weight="400" class="t-ink">다누리 발사</text>
+<circle cx="350" cy="224.9" r="6" class="f-edge"/>
+<text x="336" y="244.9" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2022.11</text>
+<text x="336" y="228.9" text-anchor="end" font-weight="400" class="t-ink">아르테미스 1호 · 무인 비행</text>
+<circle cx="350" cy="413.8" r="6" class="f-edge"/>
+<text x="336" y="433.8" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2026.4</text>
+<text x="336" y="417.8" text-anchor="end" font-weight="400" class="t-ink">아르테미스 2호 · 유인 달 선회</text>
+<circle cx="410" cy="413.9" r="6" class="f-edge"/>
+<text x="424" y="433.9" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2026.4</text>
+<text x="424" y="417.9" text-anchor="start" font-weight="400" class="t-ink">K-라드큐브, 2호에 탑승</text>
+<circle cx="350" cy="483.7" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="336" y="503.7" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2027년 목표</text>
+<text x="336" y="487.7" text-anchor="end" font-weight="400" class="t-ink">아르테미스 3호 · 지구궤도 시험</text>
+<circle cx="410" cy="521.1" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="424" y="541.1" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2028년 목표</text>
+<text x="424" y="525.1" text-anchor="start" font-weight="400" class="t-ink">다누리 임무 종료</text>
+<circle cx="350" cy="539.8" r="7" class="hi" stroke-width="2"/>
+<text x="336" y="559.8" text-anchor="end" font-size="11.5" font-weight="600" class="t-ink">2028년 목표</text>
+<text x="336" y="543.8" text-anchor="end" font-weight="600" class="t-ink">아르테미스 4호 · 첫 달 착륙</text>
+<circle cx="410" cy="595.8" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="424" y="615.8" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2029년 목표</text>
+<text x="424" y="599.8" text-anchor="start" font-weight="400" class="t-ink">달 통신 궤도선</text>
+<circle cx="410" cy="651.7" r="7" class="hi" stroke-width="2"/>
+<text x="424" y="671.7" text-anchor="start" font-size="11.5" font-weight="600" class="t-ink">2030년 목표</text>
+<text x="424" y="655.7" text-anchor="start" font-weight="600" class="t-ink">민간 소형 착륙선 · 첫 착륙 도전</text>
+<circle cx="350" cy="735.9" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="336" y="755.9" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2032년 목표</text>
+<text x="336" y="739.9" text-anchor="end" font-weight="400" class="t-ink">달 기지 장기 체류 시작</text>
+<circle cx="410" cy="763.8" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="424" y="783.8" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2032년 목표</text>
+<text x="424" y="767.8" text-anchor="start" font-weight="400" class="t-ink">착륙 검증선·착륙선 2기</text>
+</svg>
+    </div>
+    <p class="note">점선 위는 이미 일어난 일, 아래는 목표입니다. 목표 연도는 그동안 여러 번 미뤄졌으니 앞으로도 바뀔 수 있습니다.</p>
+
+    <section class="sources">
+      <h2>출처</h2>
+      <h3>NASA·아르테미스</h3>
+      <ul>
+        <li><a href="https://www.nasa.gov/blogs/missions/2026/10/23/nasa-shares-artemis-acceleration-plans-for-moon-missions/" target="_blank" rel="noopener">NASA – Artemis Acceleration 브리핑 (2026.10.23)</a></li>
+        <li><a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">NASA – Moon Base 수송·기술·과학 계약 발표 (2026.11.7)</a></li>
+        <li><a href="https://www.news4jax.com/tech/2026/10/23/nasa-adopting-apollos-urgency-to-build-a-moon-base-and-land-astronauts-within-two-years/" target="_blank" rel="noopener">AP – NASA, 달 기지와 2년 내 착륙 추진 (2026.10.23)</a></li>
+        <li><a href="https://news.wttw.com/2026/04/10/artemis-ii-astronauts-return-moon-splashdown-close-out-record-breaking-lunar-voyage" target="_blank" rel="noopener">AP – 아르테미스 2호 귀환 (2026.4.10)</a></li>
+        <li><a href="https://www.aljazeera.com/news/2026/4/6/artemis-ii-breaks-record-for-the-furthest-human-travel-from-earth" target="_blank" rel="noopener">Al Jazeera – 아르테미스 2호, 아폴로 13호 거리 기록 경신 (2026.4.6)</a></li>
+        <li><a href="https://www.foxweather.com/earth-space/artemis-ii-capsule-splashes-down-closing-one-mission-ushering-new-era-human-spaceflight" target="_blank" rel="noopener">Fox Weather – 아르테미스 2호 착수</a></li>
+        <li><a href="https://www.fox29.com/news/artemis-ii-space-record-breaks-apollo-13-distance" target="_blank" rel="noopener">FOX – 2호 달 근접 비행 일정</a></li>
+        <li><a href="https://www.nasa.gov/?p=320430" target="_blank" rel="noopener">NASA – 아르테미스 1호 결과</a></li>
+        <li><a href="https://livescience.com/space/space-exploration/nasa-shares-incredible-footage-of-artemis-i-capsule-hurtling-through-earths-atmosphere-after-historic-moon-voyage" target="_blank" rel="noopener">Live Science – 1호 열차폐막</a></li>
+        <li><a href="https://www.cbsnews.com/news/nasa-artemis-moon-program-overhaul" target="_blank" rel="noopener">CBS News – 아르테미스 계획 개편 (2026.2)</a></li>
+        <li><a href="https://www.discovermagazine.com/major-changes-to-nasa-s-artemis-iii-and-artemis-iv-missions-to-the-moon-48771" target="_blank" rel="noopener">Discover – 3·4호 임무 변경</a></li>
+        <li><a href="https://spaceflightnow.com/?p=72696" target="_blank" rel="noopener">Spaceflight Now – 아르테미스 개편</a></li>
+        <li><a href="https://www.iflscience.com/artemis-iii-has-already-been-pushed-back-to-late-2027-just-2-months-after-nasa-announced-ambitious-new-moon-plan-83377" target="_blank" rel="noopener">IFLScience – 3호 일정 연기 (2026.5)</a></li>
+        <li><a href="https://www.ecoticias.com/en/?p=53169" target="_blank" rel="noopener">ECONEWS – 3호 2027년 여름 목표</a></li>
+        <li><a href="https://thespacereview.com/article/5171/1" target="_blank" rel="noopener">The Space Review – 2호 발사 전 지연</a></li>
+        <li><a href="https://www.cbsnews.com/amp/news/nasa-moon-landing-artemis-lunar-south-pole" target="_blank" rel="noopener">CBS News – 달 남극 착륙 후보지</a></li>
+        <li><a href="https://starlust.org/why-is-the-moons-south-pole-central-to-nas-as-plans-for-a-crewed-landing-and-a-lunar-base/" target="_blank" rel="noopener">Starlust – 달 남극이 중요한 이유</a></li>
+      </ul>
+      <h3>SpaceX</h3>
+      <ul>
+        <li><a href="https://www.nationalgeographic.com/science/article/nasa-selects-spacex-to-build-the-lunar-lander-for-artemis-missions-to-the-moon" target="_blank" rel="noopener">National Geographic – SpaceX 착륙선 선정 (2021.4)</a></li>
+        <li><a href="https://www.space.com/space-exploration/launches-spacecraft/spacexs-starship-just-turned-10-years-old-when-will-it-go-to-mars" target="_blank" rel="noopener">Space.com – 스타십 10년, 궤도 급유 과제 (2026.10.14)</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Starship_HLS" target="_blank" rel="noopener">Wikipedia – Starship HLS</a></li>
+      </ul>
+      <h3>한국</h3>
+      <ul>
+        <li><a href="https://newspim.com/news/view/20210526001014" target="_blank" rel="noopener">뉴스핌 – 아르테미스 약정 10번째 서명 (2021.5)</a></li>
+        <li><a href="https://www.korea.kr/news/policyNewsView.do?newsId=148935674" target="_blank" rel="noopener">정책브리핑 – KASA-NASA 연구협약</a></li>
+        <li><a href="https://www.ajunews.com/view/20230920122033546" target="_blank" rel="noopener">아주경제 – 다누리 섀도캠, 섀클턴 크레이터 촬영</a></li>
+        <li><a href="https://newsspace.kr/news/article.html?no=8420" target="_blank" rel="noopener">뉴스스페이스 – 다누리 3주년 성과</a></li>
+        <li><a href="https://www.khan.co.kr/article/202509241203001" target="_blank" rel="noopener">경향신문 – 다누리 동결궤도 진입 (2025.9)</a></li>
+        <li><a href="https://mobile.newsis.com/view/NISX20250210_0003059502" target="_blank" rel="noopener">뉴시스 – 다누리 임무 2027년까지 연장</a></li>
+        <li><a href="https://mobile.newsis.com/view/NISX20260129_0003494982" target="_blank" rel="noopener">뉴시스 – K-라드큐브 임무 소개</a></li>
+        <li><a href="https://www.kukinews.com/article/view/kuk202505090067" target="_blank" rel="noopener">쿠키뉴스 – K-라드큐브 탑재체</a></li>
+        <li><a href="https://mobile.newsis.com/view/NISX20260403_0003577503" target="_blank" rel="noopener">뉴시스 – K-라드큐브 교신 결과 (2026.4.3)</a></li>
+        <li><a href="https://mobile.newsis.com/view/NISX20260404_0003577909" target="_blank" rel="noopener">뉴시스 – K-라드큐브 신호 감지 불발 (2026.4.4)</a></li>
+        <li><a href="https://www.newsis.com/view/NISX20260403_0003577525" target="_blank" rel="noopener">뉴시스 – 한국 달 탐사 로드맵</a></li>
+        <li><a href="https://www.newsis.com/view/NISX20260703_0003695437" target="_blank" rel="noopener">뉴시스 – 2030년 소형 달 착륙선 (2026.7.3)</a></li>
+        <li><a href="https://www.koreancenter.or.kr/news/articleView.html?idxno=1432318" target="_blank" rel="noopener">연합뉴스 – 2032년 착륙 후보지 공개 (2026.10.30)</a></li>
+        <li><a href="https://www.khan.co.kr/article/202512221624001/" target="_blank" rel="noopener">경향신문 – 차세대발사체 재사용 개발 확정</a></li>
+        <li><a href="https://view.asiae.co.kr/article/2026072914590589615" target="_blank" rel="noopener">아시아경제 – NASA, 한국을 달 기지 주요 협력국으로 (2026.7.29)</a></li>
+      </ul>
+      <h3>사진</h3>
+      <ul>
+        <li><a href="https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/" target="_blank" rel="noopener">문 베이스 상상도 – NASA</a></li>
+        <li><a href="https://www.nasa.gov/image-detail/amf-nhq202604010263/" target="_blank" rel="noopener">아르테미스 2호 발사 – NASA/Aubrey Gemignani</a></li>
+        <li><a href="https://www.nasa.gov/image-article/earthset" target="_blank" rel="noopener">지구가 지는 장면(Earthset) – NASA</a></li>
+        <li><a href="https://www.nasa.gov/humans-in-space/nasa-spacex-illustrate-key-moments-of-artemis-lunar-lander-mission/" target="_blank" rel="noopener">달 표면의 스타십 착륙선 상상도 – SpaceX (NASA 게재)</a></li>
+        <li><a href="https://www.nasa.gov/humans-in-space/nasa-spacex-illustrate-key-moments-of-artemis-lunar-lander-mission/" target="_blank" rel="noopener">스타십 궤도 급유 상상도 – SpaceX (NASA 게재)</a></li>
+        <li><a href="https://www.nasa.gov/feature/nasa-s-shadowcam-images-lunar-south-pole-region/" target="_blank" rel="noopener">섀클턴 크레이터 내부(섀도캠) – KARI/ASU/NASA</a></li>
+      </ul>
+    </section>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 OrbitCraft · 문현빈</span>
+    <a href="../index.html#monthly">← OrbitCraft로 돌아가기</a>
+  </div>
+</footer>
+</body>
+</html>

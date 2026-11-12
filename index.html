@@ -155,7 +155,10 @@ ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(-
 .corners li { display: grid; grid-template-columns: 104px 1fr; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
 .corners li b { font-weight: 600; }
 .corners li span { color: var(--muted); }
-.issue { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 22px; }
+.issue { display: block; text-decoration: none; color: inherit; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 22px; transition: border-color .2s; }
+.issue:hover { border-color: var(--accent); }
+.issue p { margin: 0 0 16px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+.issue .read { display: inline-block; font-size: 14px; font-weight: 600; color: var(--accent); }
 .issue .vol { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
 .issue .vol b { color: var(--accent); font-weight: 500; }
 .issue .vol span { color: var(--muted); }
@@ -319,11 +322,12 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
             <li><b>이달의 우주</b><span>한 달 동안의 발사, 탐사, 연구 소식</span></li>
           </ul>
         </div>
-        <article class="issue">
-          <div class="vol"><b>VOL. 01</b><span>2026.12 예정</span></div>
-          <h3>창간호</h3>
-          <span class="st">준비 중</span>
-        </article>
+        <a class="issue" href="monthly/vol01.html" target="_blank" rel="noopener">
+          <div class="vol"><b>VOL. 01</b><span>2026.11</span></div>
+          <h3>창간호 - 우리는 왜 다시 달에 가는가, 대한민국의 도전</h3>
+          <p>아르테미스 2호의 54년 만의 유인 달 비행부터 다누리, K-라드큐브, 2032년 한국의 달 착륙 계획까지.</p>
+          <span class="read">기사 읽기 ↗</span>
+        </a>
       </div>
     </div>
   </section>
