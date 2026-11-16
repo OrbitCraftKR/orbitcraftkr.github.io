@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>소논문 · OrbitCraft</title>
+<meta name="description" content="OrbitCraft의 소논문 목록: 발사체, 추진 · 엔진, 제조 · 품질, 인공위성 분야의 완성된 논문과 진행 중인 연구.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+
+/* Layout: index of papers on one 1040px column. Masthead band, field strip that doubles
+   as the filter, then 완성 / 진행 중 lists. Same tokens as the main page. */
+:root {
+  --paper: #f2f5f8;
+  --panel: #ffffff;
+  --ink: #0a1724;
+  --muted: #536274;
+  --line: #d0d9e2;
+  --accent: #0277b6;
+  --accent-soft: #e1eef6;
+  --space: #03070d;
+  --space-ink: #e6eef6;
+  --space-soft: #9fb2c4;
+  --space-line: rgba(159, 178, 196, .24);
+  --space-accent: #5cc4f2;
+
+  --f-display: "Chakra Petch", "IBM Plex Sans KR", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #071019; --panel: #0d1926; --ink: #e3edf5; --muted: #8699ac;
+    --line: #1d2f42; --accent: #46b8ee; --accent-soft: #0e2638;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #071019; --panel: #0d1926; --ink: #e3edf5; --muted: #8699ac;
+  --line: #1d2f42; --accent: #46b8ee; --accent-soft: #0e2638;
+  color-scheme: dark;
+}
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.7;
+  word-break: keep-all; overflow-wrap: anywhere;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+header.top { border-bottom: 1px solid var(--line); background: var(--paper); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; max-width: 1180px; }
+.logo { font-family: var(--f-display); font-weight: 600; font-size: 19px; letter-spacing: .02em; text-decoration: none; display: flex; align-items: center; gap: 9px; }
+.logo svg { width: 20px; height: 20px; }
+.logo .mark-line { stroke: var(--accent); }
+nav.links { display: flex; gap: 22px; font-size: 14px; }
+nav.links a { text-decoration: none; color: var(--muted); }
+nav.links a:hover, nav.links a[aria-current] { color: var(--ink); }
+nav.links a[aria-current] { font-weight: 600; }
+
+.mast { background: var(--space); color: var(--space-ink); }
+.mast .wrap { padding-block: 64px 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px 48px; align-items: end; }
+.mast h1 { font-family: var(--f-display); font-weight: 600; font-size: clamp(44px, 7vw, 76px); line-height: 1; margin: 0; letter-spacing: -.01em; }
+.mast h1 small { display: block; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; color: var(--space-accent); font-weight: 500; margin-bottom: 14px; }
+.mast p { margin: 0; color: var(--space-soft); max-width: 34em; }
+.tally { display: flex; gap: 28px; margin-top: 22px; font-family: var(--f-mono); font-size: 13px; color: var(--space-soft); font-variant-numeric: tabular-nums; }
+.tally b { display: block; font-family: var(--f-display); font-size: 30px; color: var(--space-ink); font-weight: 600; line-height: 1.1; }
+
+.fields { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.fbtn {
+  text-align: left; background: transparent; border: 0; border-right: 1px solid var(--line);
+  padding: 18px 16px 20px; font: inherit; color: var(--muted); cursor: pointer; min-width: 0;
+  border-top: 3px solid transparent; transition: background-color .15s, color .15s;
+}
+.fbtn:last-child { border-right: 0; }
+.fbtn:hover { color: var(--ink); background: var(--panel); }
+.fbtn[aria-pressed="true"] { color: var(--ink); border-top-color: var(--accent); background: var(--panel); }
+.fbtn .en { display: block; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+.fbtn b { display: block; font-size: 16px; font-weight: 600; margin: 3px 0 4px; color: inherit; }
+.fbtn small { display: block; font-size: 13px; line-height: 1.55; }
+.fbtn .n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); margin-top: 8px; display: block; }
+
+main .wrap { padding-block: 40px 72px; }
+.desc { color: var(--muted); margin: 0 0 8px; min-height: 1.7em; }
+.list-head { display: flex; justify-content: space-between; align-items: baseline; margin: 36px 0 0; padding-bottom: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; }
+ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.paper { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.paper .meta { font-family: var(--f-mono); font-size: 12px; color: var(--muted); line-height: 1.6; font-variant-numeric: tabular-nums; }
+.paper .meta .id { color: var(--accent); display: block; font-weight: 500; }
+.paper h3 { margin: 0 0 6px; font-size: 19px; font-weight: 600; line-height: 1.45; text-wrap: balance; }
+.paper p { margin: 0 0 12px; color: var(--muted); font-size: 15px; max-width: 42em; }
+.paper .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tag { font-size: 12px; padding: 2px 9px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.st { font-size: 12px; padding: 1px 9px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+.st.doing { color: var(--accent); border-color: var(--accent); }
+.pdf { font-size: 13px; font-weight: 600; color: var(--accent); }
+.empty { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+
+.back { display: inline-block; margin-top: 40px; font-size: 14px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--ink); }
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 26px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--muted); font-family: var(--f-mono); }
+footer a { text-decoration: none; }
+
+@media (max-width: 860px) {
+  nav.links { gap: 14px; }
+  nav.links a.wide { display: none; }
+  .mast .wrap { grid-template-columns: 1fr; padding-block: 44px 36px; }
+  .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fbtn { border-bottom: 1px solid var(--line); }
+  .fbtn:nth-child(2n) { border-right: 0; }
+  .fbtn:first-child { grid-column: 1 / -1; border-right: 0; }
+  .fbtn small { display: none; }
+  .paper { grid-template-columns: 1fr; gap: 6px; }
+  .paper .meta .id { display: inline; margin-right: 8px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="OrbitCraft 홈으로">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 L20.5 21 L12 16.2 L3.5 21 Z" fill="currentColor"/><path class="mark-line" d="M1.5 14.5 L22.5 8" stroke-width="1.8"/></svg>
+      <span>OrbitCraft</span>
+    </a>
+    <nav class="links" aria-label="주요 메뉴">
+      <a class="wide" href="index.html#about">소개</a>
+      <a href="index.html#research">연구</a>
+      <a href="papers.html" aria-current="page">소논문</a>
+      <a href="index.html#monthly">월간지</a>
+      <a class="wide" href="index.html#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<section class="mast">
+  <div class="wrap">
+    <h1><small>RESEARCH PAPERS</small>소논문</h1>
+    <div>
+      <p>발사체와 엔진, 복합재와 적층제조, 인공위성까지. 우주로 가는 길에 필요한 기술을 하나씩 계산하고 분석한 기록입니다. 완성된 논문은 PDF로 함께 올립니다.</p>
+      <div class="tally">
+        <span><b id="tDone">0</b>완성</span>
+        <span><b id="tDoing">0</b>진행 중</span>
+        <span><b id="tPlan">0</b>준비 중</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" style="padding-inline: 0; max-width: 1080px;">
+  <div class="fields" id="fields" role="group" aria-label="분야별 보기"></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <p class="desc" id="desc"></p>
+    <div class="list-head"><span>완성된 논문</span><span id="nDone"></span></div>
+    <ol class="papers" id="listDone"></ol>
+    <div class="list-head"><span>진행 중인 연구</span><span id="nDoing"></span></div>
+    <ol class="papers" id="listDoing"></ol>
+    <a class="back" href="index.html">← OrbitCraft 처음으로</a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 OrbitCraft · 문현빈</span>
+    <a href="index.html#contact">gnumun1012@gmail.com</a>
+  </div>
+</footer>
+
+<script src="data/papers.js"></script>
+<script>
+(function () {
+  const F = window.ORBIT_FIELDS || [], P = window.ORBIT_PAPERS || [], S = window.ORBIT_STATUS || {};
+  const count = s => P.filter(p => p.s === s).length;
+  document.getElementById("tDone").textContent = count("done");
+  document.getElementById("tDoing").textContent = count("doing");
+  document.getElementById("tPlan").textContent = count("plan");
+
+  const box = document.getElementById("fields");
+  const all = [{ name: "all", en: "All fields", label: "전체", desc: "네 분야의 모든 연구" }].concat(F.map(f => Object.assign({ label: f.name }, f)));
+  all.forEach((f, i) => {
+    const n = f.name === "all" ? P.length : P.filter(p => p.f === f.name).length;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "fbtn"; b.id = "f-" + i;
+    b.dataset.f = f.name; b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.innerHTML = `<span class="en">${f.en}</span><b>${f.label}</b><small>${f.desc}</small><span class="n">${n ? n + "건" : "준비 중"}</span>`;
+    b.addEventListener("click", () => {
+      box.querySelectorAll(".fbtn").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      render(f.name);
+    });
+    box.appendChild(b);
+  });
+
+  function item(p) {
+    const li = document.createElement("li");
+    li.className = "paper";
+    const right = p.s === "done"
+      ? (p.pdf ? `<a class="pdf" href="${p.pdf}" target="_blank" rel="noopener">PDF 보기 ↗</a>` : `<span class="st">PDF 준비 중</span>`)
+      : `<span class="st ${p.s}">${S[p.s]}</span>`;
+    li.innerHTML = `<div class="meta"><span class="id">${p.id}</span>${p.date || "2026"}</div>
+      <div><h3>${p.t}</h3><p>${p.a}</p>
+      <div class="row"><span class="tag">${p.f}</span>${right}</div></div>`;
+    return li;
+  }
+  function render(f) {
+    const meta = F.find(x => x.name === f);
+    document.getElementById("desc").textContent = meta ? meta.desc : "네 분야에서 진행하고 있는 모든 연구입니다.";
+    const shown = P.filter(p => f === "all" || p.f === f);
+    const done = shown.filter(p => p.s === "done");
+    const doing = shown.filter(p => p.s !== "done").sort((a, b) => (a.s === "doing" ? 0 : 1) - (b.s === "doing" ? 0 : 1));
+    const ld = document.getElementById("listDone"), lg = document.getElementById("listDoing");
+    ld.innerHTML = ""; lg.innerHTML = "";
+    if (done.length) done.forEach(p => ld.appendChild(item(p)));
+    else ld.innerHTML = `<li class="empty">첫 번째 논문을 준비하고 있습니다. 완성되면 이곳에 PDF와 함께 올라옵니다.</li>`;
+    if (doing.length) doing.forEach(p => lg.appendChild(item(p)));
+    else lg.innerHTML = `<li class="empty">이 분야의 연구를 준비하고 있습니다.</li>`;
+    document.getElementById("nDone").textContent = done.length + "편";
+    document.getElementById("nDoing").textContent = doing.length + "건";
+  }
+  render("all");
+})();
+</script>
+</body>
+</html>
