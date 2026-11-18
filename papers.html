@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>소논문 · OrbitCraft</title>
+<title>논문 · 소논문 · OrbitCraft</title>
 <meta name="description" content="OrbitCraft의 소논문 목록: 발사체, 추진 · 엔진, 제조 · 품질, 인공위성 분야의 완성된 논문과 진행 중인 연구.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +95,13 @@ nav.links a[aria-current] { font-weight: 600; }
 
 main .wrap { padding-block: 40px 72px; }
 .desc { color: var(--muted); margin: 0 0 8px; min-height: 1.7em; }
+.kinds { display: flex; gap: 0; margin: 0 0 18px; border: 1px solid var(--line); width: max-content; max-width: 100%; }
+.kbtn { font: 500 14px var(--f-body); padding: 9px 18px; background: transparent; color: var(--muted); border: 0; border-left: 1px solid var(--line); cursor: pointer; }
+.kbtn:first-child { border-left: 0; }
+.kbtn small { font-family: var(--f-mono); font-size: 12px; margin-left: 6px; }
+.kbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.kind { font-size: 12px; padding: 2px 9px; font-weight: 600; border: 1px solid var(--ink); color: var(--ink); }
+.kind.sub { border-color: var(--line); color: var(--muted); font-weight: 500; }
 .list-head { display: flex; justify-content: space-between; align-items: baseline; margin: 36px 0 0; padding-bottom: 10px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; }
 ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
 .paper { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line); }
@@ -106,7 +113,11 @@ ol.papers { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(-
 .tag { font-size: 12px; padding: 2px 9px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
 .st { font-size: 12px; padding: 1px 9px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
 .st.doing { color: var(--accent); border-color: var(--accent); }
-.pdf { font-size: 13px; font-weight: 600; color: var(--accent); }
+.pdf { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 3px 10px; border: 1px solid var(--accent); }
+.pdf:hover { background: var(--accent-soft); }
+.pdf.save { color: var(--ink); border-color: var(--line); }
+.tlink { text-decoration: none; }
+.tlink:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .empty { padding: 22px 0; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 15px; }
 
 .back { display: inline-block; margin-top: 40px; font-size: 14px; color: var(--muted); text-decoration: none; }
@@ -141,7 +152,7 @@ footer a { text-decoration: none; }
       <a class="wide" href="index.html#about">소개</a>
       <a class="wide" href="index.html#members">멤버</a>
       <a href="index.html#research">연구</a>
-      <a href="papers.html" aria-current="page">소논문</a>
+      <a href="papers.html" aria-current="page">논문</a>
       <a href="index.html#monthly">월간지</a>
       <a class="wide" href="index.html#contact">문의</a>
     </nav>
@@ -150,7 +161,7 @@ footer a { text-decoration: none; }
 
 <section class="mast">
   <div class="wrap">
-    <h1><small>RESEARCH PAPERS</small>소논문</h1>
+    <h1><small>RESEARCH PAPERS</small>논문 · 소논문</h1>
     <div>
       <p>발사체와 엔진, 복합재와 적층제조, 인공위성까지. 우주로 가는 길에 필요한 기술을 하나씩 계산하고 분석한 기록입니다. 완성된 논문은 PDF로 함께 올립니다.</p>
       <div class="tally">
@@ -168,10 +179,11 @@ footer a { text-decoration: none; }
 
 <main>
   <div class="wrap">
+    <div class="kinds" id="kinds" role="group" aria-label="분류별 보기"></div>
     <p class="desc" id="desc"></p>
-    <div class="list-head"><span>완성된 논문</span><span id="nDone"></span></div>
+    <div class="list-head"><span>완성</span><span id="nDone"></span></div>
     <ol class="papers" id="listDone"></ol>
-    <div class="list-head"><span>진행 중인 연구</span><span id="nDoing"></span></div>
+    <div class="list-head"><span>진행 중</span><span id="nDoing"></span></div>
     <ol class="papers" id="listDoing"></ol>
     <a class="back" href="index.html">← OrbitCraft 처음으로</a>
   </div>
@@ -203,7 +215,7 @@ footer a { text-decoration: none; }
     b.innerHTML = `<span class="en">${f.en}</span><b>${f.label}</b><small>${f.desc}</small><span class="n">${n ? n + "건" : "준비 중"}</span>`;
     b.addEventListener("click", () => {
       box.querySelectorAll(".fbtn").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
-      render(f.name);
+      curF = f.name; render();
     });
     box.appendChild(b);
   });
@@ -211,30 +223,48 @@ footer a { text-decoration: none; }
   function item(p) {
     const li = document.createElement("li");
     li.className = "paper";
+    const file = p.pdf ? p.pdf.split("/").pop() : "";
     const right = p.s === "done"
-      ? (p.pdf ? `<a class="pdf" href="${p.pdf}" target="_blank" rel="noopener">PDF 보기 ↗</a>` : `<span class="st">PDF 준비 중</span>`)
+      ? (p.pdf ? `<a class="pdf" href="${p.pdf}" target="_blank" rel="noopener">PDF 보기 ↗</a><a class="pdf save" href="${p.pdf}" download="${file}">PDF 저장 ↓</a>` : `<span class="st">PDF 준비 중</span>`)
       : `<span class="st ${p.s}">${S[p.s]}</span>`;
+    const title = p.pdf ? `<a class="tlink" href="${p.pdf}" target="_blank" rel="noopener">${p.t}</a>` : p.t;
     li.innerHTML = `<div class="meta"><span class="id">${p.id}</span>${p.date || "2026"}</div>
-      <div><h3>${p.t}</h3><p>${p.a}</p>
-      <div class="row"><span class="tag">${p.f}</span>${right}</div></div>`;
+      <div><h3>${title}</h3><p>${p.a}</p>
+      <div class="row"><span class="kind${p.k === "논문" ? "" : " sub"}">${p.k || "소논문"}</span><span class="tag">${p.f}</span>${right}</div></div>`;
     return li;
   }
-  function render(f) {
+  let curF = "all", curK = "all";
+  const K = window.ORBIT_KINDS || ["논문", "소논문"];
+  const kbox = document.getElementById("kinds");
+  [["all", "전체"]].concat(K.map(k => [k, k])).forEach(([k, label], i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "kbtn"; b.id = "k-" + i;
+    b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    const n = k === "all" ? P.length : P.filter(p => p.k === k).length;
+    b.innerHTML = `${label}<small>${n}</small>`;
+    b.addEventListener("click", () => {
+      kbox.querySelectorAll(".kbtn").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      curK = k; render();
+    });
+    kbox.appendChild(b);
+  });
+  function render() {
+    const f = curF;
     const meta = F.find(x => x.name === f);
     document.getElementById("desc").textContent = meta ? meta.desc : "네 분야에서 진행하고 있는 모든 연구입니다.";
-    const shown = P.filter(p => f === "all" || p.f === f);
+    const shown = P.filter(p => (f === "all" || p.f === f) && (curK === "all" || p.k === curK));
     const done = shown.filter(p => p.s === "done");
     const doing = shown.filter(p => p.s !== "done").sort((a, b) => (a.s === "doing" ? 0 : 1) - (b.s === "doing" ? 0 : 1));
     const ld = document.getElementById("listDone"), lg = document.getElementById("listDoing");
     ld.innerHTML = ""; lg.innerHTML = "";
     if (done.length) done.forEach(p => ld.appendChild(item(p)));
-    else ld.innerHTML = `<li class="empty">첫 번째 논문을 준비하고 있습니다. 완성되면 이곳에 PDF와 함께 올라옵니다.</li>`;
+    else ld.innerHTML = `<li class="empty">완성된 글이 아직 없습니다. 완성되면 이곳에 PDF와 함께 올라옵니다.</li>`;
     if (doing.length) doing.forEach(p => lg.appendChild(item(p)));
     else lg.innerHTML = `<li class="empty">이 분야의 연구를 준비하고 있습니다.</li>`;
     document.getElementById("nDone").textContent = done.length + "편";
     document.getElementById("nDoing").textContent = doing.length + "건";
   }
-  render("all");
+  render();
 })();
 </script>
 </body>

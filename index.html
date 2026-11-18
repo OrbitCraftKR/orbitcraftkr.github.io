@@ -290,6 +290,12 @@ section.block .wrap { padding-block: 72px; }
 .wip li .f { grid-column: 1; font-size: 13px; color: var(--muted); }
 .st { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-size: 12px; padding: 2px 9px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; white-space: nowrap; }
 .st.doing { color: var(--accent); border-color: var(--accent); }
+a.st.done { color: var(--paper); background: var(--accent); border-color: var(--accent); text-decoration: none; }
+a.st.done:hover { opacity: .88; }
+.wip a.t { text-decoration: none; }
+.wip .kd { font-weight: 600; font-size: 11.5px; color: var(--ink); border: 1px solid var(--ink); padding: 0 6px; margin-right: 8px; }
+.wip .kd.sub { font-weight: 500; color: var(--muted); border-color: var(--line); }
+.wip a.t:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 
 /* monthly */
 .monthly { display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: start; }
@@ -387,7 +393,7 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
       <a href="#about">소개</a>
       <a href="#members">멤버</a>
       <a href="#research">연구</a>
-      <a href="papers.html">소논문</a>
+      <a href="papers.html">논문</a>
       <a href="#monthly">월간지</a>
       <a href="#contact">문의</a>
     </nav>
@@ -405,8 +411,8 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
   <ol>
     <li><a href="#about"><b>소개</b><span>OrbitCraft가 하는 일</span><i>↓</i></a></li>
     <li><a href="#members"><b>멤버</b><span>함께 연구하고 기록하는 사람들</span><i>↓</i></a></li>
-    <li><a href="#research"><b>연구</b><span>연구 분야와 진행 중인 소논문</span><i>↓</i></a></li>
-    <li><a href="papers.html"><b>소논문</b><span>소논문 전체 목록과 진행 상황</span><i>→</i></a></li>
+    <li><a href="#research"><b>연구</b><span>연구 분야와 논문 · 소논문</span><i>↓</i></a></li>
+    <li><a href="papers.html"><b>논문 · 소논문</b><span>전체 목록과 진행 상황</span><i>→</i></a></li>
     <li><a href="#monthly"><b>월간지</b><span>매달 발행하는 월간 OrbitCraft</span><i>↓</i></a></li>
     <li><a href="#contact"><b>문의 · 섭외</b><span>연구 질문, 공동 연구, 발표 요청</span><i>↓</i></a></li>
   </ol>
@@ -595,14 +601,14 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
     <div class="wrap">
       <div class="sec-head">
         <h2>연구</h2>
-        <p>우주로 가는 길을 네 분야로 나눠 하나씩 계산하고 분석합니다. 진행 중인 소논문은 소논문 페이지에서 자세히 볼 수 있습니다.</p>
+        <p>우주로 가는 길을 네 분야로 나눠 하나씩 계산하고 분석합니다. 완성된 논문은 PDF로 바로 열어 볼 수 있습니다.</p>
       </div>
       <div class="fields" id="fields"></div>
       <div class="wip">
         <div>
-          <h3>진행 중인 소논문</h3>
+          <h3>논문 · 소논문</h3>
           <p id="wipCount">지금 작업하고 있는 연구입니다.</p>
-          <a class="btn" href="papers.html">소논문 전체 보기 →</a>
+          <a class="btn" href="papers.html">전체 보기 →</a>
         </div>
         <ol id="wipList"></ol>
       </div>
@@ -689,17 +695,21 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
     const el = document.createElement("div");
     el.className = "field";
     el.innerHTML = `<div class="en">${f.en}</div><b>${f.name}</b><p>${f.desc}</p>
-      <span class="count">${d ? "완성 " + d + "편 · " : ""}${n ? "진행 " + n + "건" : "준비 중"}</span>`;
+      <span class="count">${[d ? "완성 " + d + "편" : "", n ? "진행 " + n + "건" : ""].filter(Boolean).join(" · ") || "준비 중"}</span>`;
     fields.appendChild(el);
   });
-  const wip = P.filter(p => p.s !== "done").sort((a, b) => (a.s === "doing" ? 0 : 1) - (b.s === "doing" ? 0 : 1));
+  const rank = { done: 0, doing: 1, plan: 2 };
+  const all = P.slice().sort((a, b) => rank[a.s] - rank[b.s]);
   const list = document.getElementById("wipList");
-  wip.forEach(p => {
+  all.forEach(p => {
     const li = document.createElement("li");
-    li.innerHTML = `<span class="t">${p.t}</span><span class="f">${p.f}</span><span class="st ${p.s}">${S[p.s]}</span>`;
+    const t = p.pdf ? `<a class="t" href="${p.pdf}" target="_blank" rel="noopener">${p.t}</a>` : `<span class="t">${p.t}</span>`;
+    const st = p.pdf ? `<a class="st done" href="${p.pdf}" target="_blank" rel="noopener">PDF 보기 ↗</a>` : `<span class="st ${p.s}">${S[p.s]}</span>`;
+    li.innerHTML = `${t}<span class="f"><b class="kd${p.k === "논문" ? "" : " sub"}">${p.k || "소논문"}</b>${p.f}${p.date ? " · " + p.date : ""}</span>${st}`;
     list.appendChild(li);
   });
-  document.getElementById("wipCount").textContent = `지금 작업하고 있는 연구 ${wip.length}건입니다.`;
+  const nd = P.filter(p => p.s === "done").length;
+  document.getElementById("wipCount").textContent = `완성 ${nd}편, 진행 중 ${P.length - nd}건입니다.`;
 })();
 
 /* ---------- header + menu ---------- */
