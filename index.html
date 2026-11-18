@@ -242,7 +242,7 @@ nav.links a:hover { opacity: 1; }
 .sheet dt, .sheet dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--space-line); }
 .sheet dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--space-soft); padding-right: 24px; padding-top: 14px; }
 .sheet dd { font-size: 15px; }
-.sheet .sh { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; color: var(--space-accent); margin: 28px 0 10px; }
+.sheet .sh { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; color: #8fdcff; font-weight: 600; margin: 28px 0 10px; }
 .sheet h3 + .aff + .sh { margin-top: 4px; }
 .rec { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--space-line); }
 .rec li { padding: 13px 0 14px; border-bottom: 1px solid var(--space-line); }
@@ -250,7 +250,7 @@ nav.links a:hover { opacity: 1; }
 .rec b { display: block; font-size: 15.5px; font-weight: 600; line-height: 1.5; }
 .rec small { display: block; margin-top: 6px; font-size: 13px; line-height: 1.7; color: var(--space-soft); }
 .rec small + small { margin-top: 3px; }
-.rec em { font-style: normal; color: var(--space-ink); opacity: .8; margin-right: 8px; }
+.rec em { font-style: normal; color: var(--space-ink); font-weight: 700; margin-right: 8px; }
 .sheet .ext { display: inline-block; margin-left: 12px; font-size: 13px; color: var(--space-accent); text-decoration: none; }
 .sheet .ext:hover { text-decoration: underline; }
 
@@ -260,9 +260,9 @@ nav.links a:hover { opacity: 1; }
 .crew-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; padding-top: 40px; border-top: 1px solid var(--space-line); margin-bottom: 28px; }
 .crew-head h2 { font-size: clamp(26px, 3vw, 32px); font-weight: 600; margin: 0; }
 .crew-head p { margin: 0; color: var(--space-soft); }
-.crew-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
-.join { border: 1px dashed var(--space-line); min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--space-soft); padding: 24px; }
-.join span { font-family: var(--f-mono); font-size: 36px; line-height: 1; color: var(--space-accent); margin-bottom: 6px; }
+.crew-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.join { grid-column: 1 / -1; border: 1px dashed var(--space-line); min-height: 84px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; text-align: center; color: var(--space-soft); padding: 18px 24px; }
+.join span { font-family: var(--f-mono); font-size: 26px; line-height: 1; color: var(--space-accent); }
 .join b { color: var(--space-ink); font-weight: 600; }
 .join small { font-size: 13px; }
 @media (min-width: 861px) { .about .wrap > div:first-child { position: sticky; top: 110px; } }
@@ -357,7 +357,7 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
   .about .wrap { grid-template-columns: 1fr; padding-block: 64px 48px; gap: 36px; }
   .crew-grid { grid-template-columns: 1fr; }
   .crew .wrap { padding-block: 8px 72px; }
-  .join { min-height: 150px; }
+  .join { min-height: 72px; }
   .sec-head { grid-template-columns: 1fr; }
   .fields { grid-template-columns: 1fr 1fr; }
   .field:nth-child(3) { padding-left: 0; border-left: 0; }
@@ -593,6 +593,32 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
             <div><dt>주요 연구분야</dt><dd>공학 &gt; 기계공학 &gt; 항공우주공학</dd></div>
             <div><dt>활동</dt><dd>DBpia 등재 24편<a class="ext" href="https://www.dbpia.co.kr/author/authorDetail?ancId=202547941" target="_blank" rel="noopener">DBpia 저자 페이지 ↗</a></dd></div>
           </dl>
+        </article>
+        <article class="sheet">
+          <h3>김동빈</h3>
+          <p class="aff">고신대학교 바이오과학수사학과 · 학부 재학</p>
+          <div class="sh">연구 분야</div>
+          <ul class="rec">
+            <li><b>법곤충학 · 과학수사</b></li>
+          </ul>
+          <div class="sh">조사 · 연구 활동</div>
+          <ul class="rec">
+            <li><b>2026년 공원자원조사(금정산)</b><small>곤충 채집, 표본 제작 및 동정</small></li>
+            <li><b>부산역 아르헨티나개미 개체군 조사</b><small>현장 조사 및 동정</small></li>
+            <li><b>검정파리과 동정</b><small>표본 관찰 및 종 판별</small></li>
+          </ul>
+          <div class="sh">수상 경력</div>
+          <ul class="rec">
+            <li><b>부산권 RISE 협의회장상(우수상)</b><small>B.SORI 프로젝트 「아르헨티나개미 방제」</small></li>
+            <li><b>동의대학교 총장상(최우수상)</b><small>대학혁신지원사업 부산·경남권 6개 대학 학생 프로그램 「증거기반 과학수사 역량 강화를 위한 공유 대학 융합 프로그램」</small></li>
+          </ul>
+          <div class="sh">과학수사 관련 활동</div>
+          <ul class="rec">
+            <li><b>경찰청 「현장이음」 참여</b></li>
+            <li><b>국립과학수사연구원 「현장이음」 참여</b></li>
+            <li><b>영산대학교 과학수사안전포럼 참석</b></li>
+            <li><b>부일외국어고등학교 학생 대상 과학수사 특강 운영 보조</b></li>
+          </ul>
         </article>
         <div class="join" aria-label="새 멤버 합류 예정">
           <span aria-hidden="true">+</span>
