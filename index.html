@@ -87,6 +87,7 @@ a { color: inherit; }
   border-bottom: 1px solid transparent;
   transition: background-color .25s, color .25s, border-color .25s;
 }
+.top.scrolled { background: rgba(4, 8, 14, .9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--space-line); }
 .top.solid {
   color: var(--ink);
   background: color-mix(in srgb, var(--paper) 94%, transparent);
@@ -234,15 +235,36 @@ nav.links a:hover { opacity: 1; }
 .sheet::before, .sheet::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--space-accent); }
 .sheet::before { left: -1px; top: -1px; border-right: 0; border-bottom: 0; }
 .sheet::after { right: -1px; bottom: -1px; border-left: 0; border-top: 0; }
-.sheet .tag { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; color: var(--space-accent); display: flex; justify-content: space-between; gap: 12px; }
-.sheet h3 { font-size: 34px; font-weight: 600; margin: 14px 0 4px; letter-spacing: -.01em; }
+.sheet h3 { font-size: 34px; font-weight: 600; margin: 0 0 4px; letter-spacing: -.01em; }
 .sheet .aff { margin: 0 0 22px; font-size: 15px; color: var(--space-soft); }
 .sheet dl { margin: 0; display: grid; grid-template-columns: auto 1fr; border-top: 1px solid var(--space-line); }
 .sheet dl > div { display: contents; }
 .sheet dt, .sheet dd { margin: 0; padding: 11px 0; border-bottom: 1px solid var(--space-line); }
 .sheet dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--space-soft); padding-right: 24px; padding-top: 14px; }
 .sheet dd { font-size: 15px; }
-.sheet .foot { margin-top: 16px; font-family: var(--f-mono); font-size: 11px; color: var(--space-soft); letter-spacing: .08em; }
+.sheet .sh { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; color: var(--space-accent); margin: 28px 0 10px; }
+.sheet h3 + .aff + .sh { margin-top: 4px; }
+.rec { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--space-line); }
+.rec li { padding: 13px 0 14px; border-bottom: 1px solid var(--space-line); }
+.rec b { display: block; font-size: 15.5px; font-weight: 600; line-height: 1.5; }
+.rec small { display: block; margin-top: 6px; font-size: 13px; line-height: 1.7; color: var(--space-soft); }
+.rec small + small { margin-top: 3px; }
+.rec em { font-style: normal; color: var(--space-ink); opacity: .8; margin-right: 8px; }
+.sheet .ext { display: inline-block; margin-left: 12px; font-size: 13px; color: var(--space-accent); text-decoration: none; }
+.sheet .ext:hover { text-decoration: underline; }
+
+/* ---------- 멤버 ---------- */
+.crew { background: var(--space); color: var(--space-ink); }
+.crew .wrap { padding-block: 24px 104px; max-width: 1140px; }
+.crew-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; padding-top: 40px; border-top: 1px solid var(--space-line); margin-bottom: 28px; }
+.crew-head h2 { font-size: clamp(26px, 3vw, 32px); font-weight: 600; margin: 0; }
+.crew-head p { margin: 0; color: var(--space-soft); }
+.crew-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+.join { border: 1px dashed var(--space-line); min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--space-soft); padding: 24px; }
+.join span { font-family: var(--f-mono); font-size: 36px; line-height: 1; color: var(--space-accent); margin-bottom: 6px; }
+.join b { color: var(--space-ink); font-weight: 600; }
+.join small { font-size: 13px; }
+@media (min-width: 861px) { .about .wrap > div:first-child { position: sticky; top: 110px; } }
 
 /* ---------- page sections ---------- */
 section.block { border-top: 1px solid var(--line); }
@@ -325,7 +347,10 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
   .hero-copy { min-height: 0; padding-top: 22px; padding-bottom: 56px; }
   .hero-copy h1 { font-size: clamp(44px, 13vw, 64px); margin-top: 10px; }
   .hero-copy .lead { font-size: 16px; }
-  .about .wrap { grid-template-columns: 1fr; padding-block: 64px 72px; gap: 36px; }
+  .about .wrap { grid-template-columns: 1fr; padding-block: 64px 48px; gap: 36px; }
+  .crew-grid { grid-template-columns: 1fr; }
+  .crew .wrap { padding-block: 8px 72px; }
+  .join { min-height: 150px; }
   .sec-head { grid-template-columns: 1fr; }
   .fields { grid-template-columns: 1fr 1fr; }
   .field:nth-child(3) { padding-left: 0; border-left: 0; }
@@ -360,6 +385,7 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
     </a>
     <nav class="links" aria-label="주요 메뉴">
       <a href="#about">소개</a>
+      <a href="#members">멤버</a>
       <a href="#research">연구</a>
       <a href="papers.html">소논문</a>
       <a href="#monthly">월간지</a>
@@ -378,6 +404,7 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
   </div>
   <ol>
     <li><a href="#about"><b>소개</b><span>OrbitCraft가 하는 일</span><i>↓</i></a></li>
+    <li><a href="#members"><b>멤버</b><span>함께 연구하고 기록하는 사람들</span><i>↓</i></a></li>
     <li><a href="#research"><b>연구</b><span>연구 분야와 진행 중인 소논문</span><i>↓</i></a></li>
     <li><a href="papers.html"><b>소논문</b><span>소논문 전체 목록과 진행 상황</span><i>→</i></a></li>
     <li><a href="#monthly"><b>월간지</b><span>매달 발행하는 월간 OrbitCraft</span><i>↓</i></a></li>
@@ -509,15 +536,57 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
         <p class="close">작은 연구 한 편이 우주로 향하는 긴 여정의 첫 계단이 되기를 바랍니다.</p>
       </div>
       <div class="sheet">
-        <div class="tag"><span>PAYLOAD · 탑재체</span><span>ORBITCRAFT</span></div>
         <h3>문현빈</h3>
         <p class="aff">경상국립대학교 항공우주공학부 · 학부 재학</p>
+        <div class="sh">연구 분야</div>
         <dl>
           <div><dt>발사체</dt><dd>궤적 · 추진 · 엔진</dd></div>
           <div><dt>복합재 구조</dt><dd>탄소섬유 · 적층제조 · 품질</dd></div>
           <div><dt>인공위성</dt><dd>자세제어 · 궤도역학</dd></div>
           <div><dt>행성과학</dt><dd>대기 · 지질 · 생명체</dd></div>
         </dl>
+        <div class="sh">수상 및 장학</div>
+        <ul class="rec">
+          <li><b>2026학년도 2학기 경상국립대 희망장학금</b><small>성적우수 · 수학물리학부 차석</small></li>
+        </ul>
+        <div class="sh">활동</div>
+        <ul class="rec">
+          <li>
+            <b>2026 DRB Space Challenge</b>
+            <small><em>연구명</em>자성 점탄성 유체(Magnetic Viscoelastic Fluid)의 흡착 메커니즘을 이용한 ‘우주 쓰레기’ 포획 시스템</small>
+            <small><em>주제</em>자성 점탄성 유체의 흡착 메커니즘을 활용하여, 구조적 형태와 재질에 구애받지 않고 우주 쓰레기를 범용적으로 포획하는 차세대 능동 파편 제거(ADR) 기술</small>
+          </li>
+          <li>
+            <b>제4회 경남 AI·SW 경진대회</b>
+            <small><em>분야</em>우주항공 제조 AI agent</small>
+            <small><em>연구명</em>금속 적층제조(LPBF) 층별 영상 기반 제조 이상 탐지 및 검사 지원 AI Agent</small>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="crew" id="members">
+    <div class="wrap">
+      <div class="crew-head">
+        <h2>멤버</h2>
+        <p>OrbitCraft와 함께 연구하고 기록하는 사람들입니다.</p>
+      </div>
+      <div class="crew-grid">
+        <article class="sheet">
+          <h3>임건우</h3>
+          <p class="aff">경상국립대학교 항공우주공학부</p>
+          <dl>
+            <div><dt>소속기관</dt><dd>월간항공</dd></div>
+            <div><dt>주요 연구분야</dt><dd>공학 &gt; 기계공학 &gt; 항공우주공학</dd></div>
+            <div><dt>활동</dt><dd>DBpia 등재 24편<a class="ext" href="https://www.dbpia.co.kr/author/authorDetail?ancId=202547941" target="_blank" rel="noopener">DBpia 저자 페이지 ↗</a></dd></div>
+          </dl>
+        </article>
+        <div class="join" aria-label="새 멤버 합류 예정">
+          <span aria-hidden="true">+</span>
+          <b>새 멤버 합류 예정</b>
+          <small>함께할 멤버를 곧 소개합니다.</small>
+        </div>
       </div>
     </div>
   </section>
@@ -553,7 +622,6 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
             <li><b>생명의 흔적</b><span>외계 생명체와 미생물이 존재할 수 있는 조건</span></li>
             <li><b>탐사선 일대기</b><span>탐사선의 발사부터 임무 종료까지의 이야기와 자료</span></li>
             <li><b>우주 환경</b><span>우주쓰레기, 우주 날씨처럼 궤도 위에서 벌어지는 일</span></li>
-            <li><b>이달의 우주</b><span>한 달 동안의 발사, 탐사, 연구 소식</span></li>
           </ul>
         </div>
         <a class="issue" href="monthly/vol01.html" target="_blank" rel="noopener">
@@ -636,10 +704,11 @@ footer .wrap { padding-block: 26px; display: flex; justify-content: space-betwee
 
 /* ---------- header + menu ---------- */
 (function () {
-  const bar = document.getElementById("topbar"), flight = document.getElementById("about");
+  const bar = document.getElementById("topbar"), flight = document.getElementById("members");
   function onScroll() {
     const solid = flight.getBoundingClientRect().bottom < 70;
     bar.classList.toggle("solid", solid);
+    bar.classList.toggle("scrolled", scrollY > 12);
   }
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
