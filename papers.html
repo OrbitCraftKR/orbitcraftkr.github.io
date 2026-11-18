@@ -72,12 +72,12 @@ nav.links a:hover, nav.links a[aria-current] { color: var(--ink); }
 nav.links a[aria-current] { font-weight: 600; }
 
 .mast { background: var(--space); color: var(--space-ink); }
-.mast .wrap { padding-block: 64px 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px 48px; align-items: end; }
-.mast h1 { font-family: var(--f-display); font-weight: 600; font-size: clamp(44px, 7vw, 76px); line-height: 1; margin: 0; letter-spacing: -.01em; }
-.mast h1 small { display: block; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; color: var(--space-accent); font-weight: 500; margin-bottom: 14px; }
+.mast .wrap { padding-block: 52px 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px 48px; align-items: end; }
+.mast h1 { font-family: var(--f-body); font-weight: 600; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.2; margin: 0; letter-spacing: -.01em; }
+.mast h1 small { display: block; font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; color: var(--space-accent); font-weight: 500; margin-bottom: 12px; }
 .mast p { margin: 0; color: var(--space-soft); max-width: 34em; }
 .tally { display: flex; gap: 28px; margin-top: 22px; font-family: var(--f-mono); font-size: 13px; color: var(--space-soft); font-variant-numeric: tabular-nums; }
-.tally b { display: block; font-family: var(--f-display); font-size: 30px; color: var(--space-ink); font-weight: 600; line-height: 1.1; }
+.tally b { display: block; font-family: var(--f-display); font-size: 24px; color: var(--space-ink); font-weight: 600; line-height: 1.1; }
 
 .fields { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
 .fbtn {
@@ -129,7 +129,7 @@ footer a { text-decoration: none; }
 @media (max-width: 860px) {
   nav.links { gap: 14px; }
   nav.links a.wide { display: none; }
-  .mast .wrap { grid-template-columns: 1fr; padding-block: 44px 36px; }
+  .mast .wrap { grid-template-columns: 1fr; padding-block: 36px 30px; }
   .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fbtn { border-bottom: 1px solid var(--line); }
   .fbtn:nth-child(2n) { border-right: 0; }
