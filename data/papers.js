@@ -3,11 +3,16 @@
 // 분야(f): FIELDS의 name 중 하나
 // 분류(k): "논문" 또는 "소논문"
 // 논문이 완성되면 s를 "done"으로 바꾸고 date와 pdf(예: "papers/파일이름.pdf")를 채우면 됩니다.
+// 분야 사진(img)과 설명(alt), 출처(cap)는 메인 페이지 연구 칸에 나옵니다. 사진은 모두 NASA 퍼블릭 도메인입니다.
 window.ORBIT_FIELDS = [
-  { name: "발사체", en: "Launch Vehicles", desc: "발사체가 지상에서 궤도까지 오르는 궤적과 비행 과정을 시뮬레이션합니다." },
-  { name: "추진 · 엔진", en: "Propulsion", desc: "로켓 엔진과 제트엔진이 추력을 만드는 원리와 성능을 계산합니다." },
-  { name: "제조 · 품질", en: "Manufacturing & Quality", desc: "복합재와 금속 적층제조 부품의 결함을 찾고, 왜 생기는지 분석합니다." },
-  { name: "인공위성", en: "Spacecraft", desc: "궤도 위의 위성이 자세를 잡고 임무를 수행하는 원리를 연구합니다." }
+  { name: "발사체", en: "Launch Vehicles", desc: "발사체가 지상에서 궤도까지 오르는 궤적과 비행 과정을 시뮬레이션합니다.",
+    img: "assets/artemis1-launch.jpg", alt: "밤하늘로 솟아오르는 SLS 로켓", cap: "아르테미스 1호 발사 · 2022 · NASA/Joel Kowsky" },
+  { name: "추진 · 엔진", en: "Propulsion", desc: "로켓 엔진과 제트엔진이 추력을 만드는 원리와 성능을 계산합니다.",
+    img: "assets/rs25-hotfire.jpg", alt: "시험대에서 연소 시험 중인 RS-25 로켓 엔진", cap: "RS-25 엔진 연소 시험 · 2024 · NASA 스테니스 우주센터" },
+  { name: "제조 · 품질", en: "Manufacturing & Quality", desc: "복합재와 금속 적층제조 부품의 결함을 찾고, 왜 생기는지 분석합니다.",
+    img: "assets/am-lab.jpg", alt: "금속 3D프린터로 막 출력한 로켓 부품의 분말을 털어내는 연구원들", cap: "적층제조 실험실 · NASA 마셜 우주비행센터 · NASA/Emmett Given" },
+  { name: "인공위성", en: "Spacecraft", desc: "궤도 위의 위성이 자세를 잡고 임무를 수행하는 원리를 연구합니다.",
+    img: "assets/orion-moon-earth.jpg", alt: "오리온 우주선 옆으로 보이는 달과 멀리 작은 지구", cap: "오리온 우주선과 달, 지구 · 아르테미스 2호 · 2026 · NASA" }
 ];
 
 window.ORBIT_PAPERS = [
