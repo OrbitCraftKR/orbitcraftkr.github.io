@@ -293,7 +293,9 @@ a.st.done:hover { background: #fff; }
 .st.doing { color: var(--accent); border-color: rgba(140, 207, 255, .45); }
 
 /* ---------- monthly ---------- */
-.monthly-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.monthly-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); align-items: end; }
+.monthly-grid .corners { margin-top: 0; }
+.issues { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 56px; align-items: stretch; }
 .corners { list-style: none; margin: 30px 0 0; padding: 0; border-top: 1px solid var(--line); counter-reset: c; }
 .corners li { display: grid; grid-template-columns: 44px 116px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--line); }
 .corners li::before { counter-increment: c; content: counter(c, decimal-leading-zero); font: 500 12px var(--f-mono); color: var(--ink-3); }
@@ -353,7 +355,8 @@ footer { border-top: 1px solid var(--line); padding: 64px 0 calc(36px + env(safe
   .hero-lead { font-size: 15.5px; margin-bottom: 28px; }
   .hero-foot .cap { font-size: 10px; letter-spacing: .1em; }
   .hero-foot .scroll-cue span { display: none; }
-  .split, .monthly-grid, .wip, .sec-head { grid-template-columns: minmax(0, 1fr); }
+  .split, .monthly-grid, .wip, .sec-head, .issues { grid-template-columns: minmax(0, 1fr); }
+  .issues { margin-top: 36px; }
   .sec-head { margin-bottom: 40px; }
   .pf { grid-template-columns: minmax(0, 1fr); }
   .pf-id { padding: 40px 0 36px; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -624,11 +627,13 @@ footer { border-top: 1px solid var(--line); padding: 64px 0 calc(36px + env(safe
   </section>
 
   <section class="sec" id="monthly">
-    <div class="wrap monthly-grid">
-      <div>
-        <p class="kicker" data-rv>Monthly</p>
-        <h2 class="h2" data-rv="left">월간 OrbitCraft</h2>
-        <p data-rv>매달 한 번, 우주에 관한 이야기와 자료를 모아 신문처럼 발행합니다. 한 달 동안 읽고 공부한 내용을 뉴스레터 형식으로 정리해 이곳에 올립니다.</p>
+    <div class="wrap">
+      <div class="monthly-grid">
+        <div>
+          <p class="kicker" data-rv>Monthly</p>
+          <h2 class="h2" data-rv="left">월간 OrbitCraft</h2>
+          <p data-rv>매달 한 번, 우주에 관한 이야기와 자료를 모아 신문처럼 발행합니다. 한 달 동안 읽고 공부한 내용을 뉴스레터 형식으로 정리해 이곳에 올립니다.</p>
+        </div>
         <ul class="corners" data-rv>
           <li><b>행성 탐구</b><span>행성의 대기와 지질, 내부 구조</span></li>
           <li><b>생명의 흔적</b><span>외계 생명체와 미생물이 존재할 수 있는 조건</span></li>
@@ -636,15 +641,26 @@ footer { border-top: 1px solid var(--line); padding: 64px 0 calc(36px + env(safe
           <li><b>우주 환경</b><span>우주쓰레기, 우주 날씨처럼 궤도 위에서 벌어지는 일</span></li>
         </ul>
       </div>
-      <a class="issue" href="monthly/vol01.html" target="_blank" rel="noopener" data-rv="photo">
-        <div class="cover"><img src="monthly/img/vol01-1.jpg" alt="NASA가 구상하는 달 남극 문 베이스 상상도" width="1400" height="784" loading="lazy"></div>
-        <div class="body">
-          <div class="vol"><b>VOL. 01</b><span>2026.11</span></div>
-          <h3>창간호 - 우리는 왜 다시 달에 가는가, 대한민국의 도전</h3>
-          <p>아르테미스 2호의 54년 만의 유인 달 비행부터 누리호와 다누리, 아시아 달 착륙 경쟁, 2032년 한국의 달 착륙 계획까지.</p>
-          <span class="read">기사 읽기 <span class="ar ne">↗</span></span>
-        </div>
-      </a>
+      <div class="issues">
+        <a class="issue" href="monthly/vol02.html" target="_blank" rel="noopener" data-rv="photo" style="--i:0">
+          <div class="cover"><img src="monthly/img/vol02-2.jpg" alt="갈릴레오 탐사선이 찍은 목성의 위성 유로파" width="1280" height="946" loading="lazy" style="object-position: 50% 30%"></div>
+          <div class="body">
+            <div class="vol"><b>VOL. 02</b><span>2026.11</span></div>
+            <h3>2026년 11월호 - 지구 밖 생명체, 그들은 어디에 있는가</h3>
+            <p>한때 물이 흐르던 화성, 얼음 밑에 바다를 숨긴 유로파와 엔셀라두스, 약 40광년 떨어진 TRAPPIST-1e까지. 그리고 물보다 중요한 생명의 단서.</p>
+            <span class="read">기사 읽기 <span class="ar ne">↗</span></span>
+          </div>
+        </a>
+        <a class="issue" href="monthly/vol01.html" target="_blank" rel="noopener" data-rv="photo" style="--i:1">
+          <div class="cover"><img src="monthly/img/vol01-1.jpg" alt="NASA가 구상하는 달 남극 문 베이스 상상도" width="1400" height="784" loading="lazy"></div>
+          <div class="body">
+            <div class="vol"><b>VOL. 01</b><span>2026.11</span></div>
+            <h3>창간호 - 우리는 왜 다시 달에 가는가, 대한민국의 도전</h3>
+            <p>아르테미스 2호의 54년 만의 유인 달 비행부터 누리호와 다누리, 아시아 달 착륙 경쟁, 2032년 한국의 달 착륙 계획까지.</p>
+            <span class="read">기사 읽기 <span class="ar ne">↗</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 

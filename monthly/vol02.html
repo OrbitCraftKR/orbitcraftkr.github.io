@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>지구 밖 생명체 · 월간 OrbitCraft VOL.02</title>
+<meta name="description" content="월간 OrbitCraft 2026년 11월호. 지구 밖 생명체, 그들은 어디에 있는가: 화성, 유로파, 엔셀라두스, TRAPPIST-1e.">
+<meta name="theme-color" content="#06090d">
+<link rel="icon" type="image/png" href="../assets/favicon-64.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700&family=Sora:wght@400;500;600&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Newsletter article on a 740px reading column, in the same night palette as the
+   main site (identical in light and dark system themes). */
+:root {
+  --paper: #06090d;
+  --panel: #0b0f14;
+  --ink: #eef2f6;
+  --body: #c9d1da;
+  --muted: #8b96a3;
+  --line: rgba(214, 226, 240, .12);
+  --line-2: rgba(214, 226, 240, .22);
+  --accent: #8ccfff;
+  --accent-soft: rgba(140, 207, 255, .1);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --f-display: "Sora", "Noto Sans KR", system-ui, sans-serif;
+  --f-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper: #06090d; --ink: #eef2f6; } }
+:root[data-theme="dark"] { --paper: #06090d; --ink: #eef2f6; }
+html { background: var(--paper); }
+body {
+  background: var(--paper); color: var(--body);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.9;
+  word-break: keep-all; overflow-wrap: anywhere; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap {
+  max-width: 740px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+header.top { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top, 0px); background: rgba(6, 9, 13, .82); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 64px; max-width: 1240px; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 600 17px var(--f-display); letter-spacing: -.01em; }
+.logo img { display: block; height: 24px; width: auto; }
+.back { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; font-size: 13.5px; color: var(--ink); text-decoration: none; border: 1px solid var(--line-2); border-radius: 2px; transition: border-color .2s, background-color .2s; }
+.back:hover { border-color: var(--ink); background: rgba(238, 242, 246, .06); }
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+
+.mast { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--line); }
+.mast-bg { position: absolute; inset: 0; z-index: -1; }
+.mast-bg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; opacity: .5; transform: scale(1.08); animation: mastZoom 2.8s var(--ease) forwards; }
+@keyframes mastZoom { to { transform: scale(1); } }
+.mast-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6, 9, 13, .55) 0%, rgba(6, 9, 13, .45) 45%, var(--paper) 100%); }
+.mast .wrap { padding-block: 120px 44px; }
+.mast .wrap > * { animation: rise .9s var(--ease) both; }
+.mast .wrap > :nth-child(2) { animation-delay: .1s; }
+.mast .wrap > :nth-child(3) { animation-delay: .2s; }
+.mast .wrap > :nth-child(4) { animation-delay: .3s; }
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.issue-line { display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.issue-line b { color: var(--accent); font-weight: 500; }
+.mast h1 { font-family: var(--f-display); font-size: clamp(30px, 5.4vw, 46px); line-height: 1.3; font-weight: 600; margin: 18px 0 8px; text-wrap: balance; letter-spacing: -.025em; color: var(--ink); }
+.mast .sub { font-size: clamp(19px, 3vw, 23px); color: var(--body); margin: 0 0 22px; font-weight: 500; }
+.byline { font-size: 14px; color: var(--muted); display: flex; gap: 10px; flex-wrap: wrap; }
+.byline span + span::before { content: "·"; margin-right: 10px; }
+
+article .wrap { padding-block: 48px 24px; }
+article p { margin: 0 0 1.25em; }
+article .lede { font-size: 19px; line-height: 1.85; color: var(--ink); }
+article h2 { font-family: var(--f-display); font-size: 25px; font-weight: 600; margin: 2.4em 0 .8em; padding-top: 1.2em; border-top: 1px solid var(--line); line-height: 1.4; text-wrap: balance; color: var(--ink); letter-spacing: -.015em; }
+article h3 { font-size: 19px; font-weight: 600; margin: 1.8em 0 .5em; line-height: 1.5; color: var(--ink); }
+article strong { font-weight: 600; color: var(--ink); }
+article ul { margin: 0 0 1.4em; padding-left: 1.2em; }
+article li { margin-bottom: .6em; }
+article li::marker { color: var(--accent); }
+.src { color: var(--muted); font-size: .82em; white-space: nowrap; }
+.src a { text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.src a:hover { color: var(--accent); }
+
+figure { margin: 2.2em 0; }
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--panel); }
+figcaption { font-size: 13.5px; color: var(--muted); margin-top: 10px; line-height: 1.65; }
+.js figure, .js .table-wrap, .js .tl-wrap, .js blockquote.closing { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform 1s var(--ease); }
+.js .in { opacity: 1 !important; transform: none !important; }
+
+.table-wrap { overflow-x: auto; margin: 1.6em 0; border: 1px solid var(--line); background: var(--panel); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; line-height: 1.6; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font-weight: 600; background: var(--accent-soft); color: var(--ink); }
+td:first-child { font-family: var(--f-mono); font-size: 13px; color: var(--muted); white-space: nowrap; }
+table.plain td:first-child { font-family: var(--f-body); font-size: 15px; color: var(--ink); white-space: normal; font-weight: 600; min-width: 7em; }
+table.plain td:first-child a { text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+table.plain tr.us td { background: var(--accent-soft); }
+table.plain tr.us td:first-child { color: var(--accent); }
+
+blockquote.closing {
+  margin: 2.6em 0 0; padding: 26px 0 26px 24px;
+  border-left: 2px solid var(--accent); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-size: 19px; line-height: 1.85; font-weight: 500; color: var(--ink); text-wrap: pretty;
+}
+
+.tl-wrap { overflow-x: auto; margin: 1.6em 0 .6em; border: 1px solid var(--line); background: var(--panel); }
+.timeline { display: block; width: 100%; min-width: 600px; height: auto; font-family: var(--f-body); }
+.t-ink { fill: var(--ink); }
+.t-quiet { fill: var(--muted); }
+.f-edge { fill: var(--muted); }
+.s-edge { stroke: var(--muted); }
+.s-grid { stroke: var(--line-2); }
+.hi { fill: var(--accent-soft); stroke: var(--accent); }
+.note { font-size: 14px; color: var(--muted); }
+
+.sources h3 { font-size: 15px; margin: 1.6em 0 .4em; }
+.sources ul { font-size: 14px; line-height: 1.7; padding-left: 1.1em; }
+.sources li { margin-bottom: .3em; }
+.sources a { text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+
+footer { border-top: 1px solid var(--line); margin-top: 48px; }
+footer .wrap { padding-block: 30px calc(30px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; max-width: 1240px; font: 500 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+footer img { display: block; height: 48px; width: auto; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  article .lede { font-size: 17px; }
+  article h2 { font-size: 22px; }
+  .mast .wrap { padding-block: 84px 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mast-bg img, .mast .wrap > * { animation: none; }
+  .js figure, .js .table-wrap, .js .tl-wrap, .js blockquote.closing { opacity: 1; transform: none; transition: none; }
+}
+</style>
+</head>
+<body>
+
+<script>document.documentElement.classList.add("js");</script>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="OrbitCraft 홈으로">
+      <img src="../assets/mark-light.png" alt="" width="181" height="128">
+      <span>OrbitCraft</span>
+    </a>
+    <a class="back" href="../index.html#monthly">← 월간지 목록</a>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<section class="mast">
+  <div class="mast-bg" aria-hidden="true"><img src="img/vol02-2.jpg" alt="" width="1280" height="946" style="object-position: 50% 35%"></div>
+  <div class="wrap">
+    <div class="issue-line"><b>월간 OrbitCraft</b><span>VOL. 02 · 2026년 11월호</span><span>2026.11</span></div>
+    <h1>지구 밖 생명체, 그들은 어디에 있는가</h1>
+    <div class="byline"><span>문현빈</span><span>2026년 11월 24일</span></div>
+  </div>
+</section>
+
+<article>
+  <div class="wrap">
+    <p class="lede">지구 밖에도 생명이 있을까요? 인류는 오래전부터 이 질문을 던져 왔지만, 지금처럼 답에 가까이 다가간 적은 없습니다. 2025년 9월 NASA는 화성 탐사 로버 퍼서비어런스가 찾은 암석을 두고 "화성에서 생명 발견에 가장 가까이 다가간 순간"이라고 발표했습니다.</p>
+    <p>이번 호에서는 과학자들이 생명을 찾고 있는 네 곳을 차례로 살펴볼 겁니다. 한때 물이 흐르던 화성, 두꺼운 얼음 밑에 바다를 숨긴 목성의 위성 유로파와 토성의 위성 엔셀라두스, 그리고 약 40광년 떨어진 지구 크기의 외계행성 TRAPPIST-1e입니다. 마지막으로 생명을 찾을 때 중요한 단서로 생각하는 물보다 중요한 것에 대해서 이야기도 함께 담았습니다.</p>
+
+    <h2>생명이 살려면 무엇이 필요할까?</h2>
+    <p>과학자들은 지구 생명을 기준으로 세 가지를 찾습니다. 액체 상태의 물, 생명의 재료가 되는 원소, 그리고 생명 활동에 쓸 에너지입니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/why-europa-ingredients-for-life" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <ul>
+      <li><strong>액체 상태의 물</strong>: 영양분을 녹여 실어 나르고, 생명에 필요한 화학 반응이 일어나는 무대입니다.</li>
+      <li><strong>생명의 재료</strong>: 탄소·수소·질소·산소·인·황 같은 원소입니다. 이 가운데 인은 DNA를 이루는 필수 원소지만 생명에 꼭 필요한 원소 가운데 가장 드뭅니다. <span class="src">(<a href="https://www.jpl.nasa.gov/news/nasa-cassini-data-reveals-building-block-for-life-in-enceladus-ocean/" target="_blank" rel="noopener">NASA JPL</a>)</span></li>
+      <li><strong>에너지</strong>: 햇빛, 또는 바다 밑에서 뜨거운 물과 암석이 반응하며 나오는 화학 에너지입니다.</li>
+    </ul>
+    <h3>생명 거주 가능 영역, '골디락스 존'</h3>
+    <p>별에서 너무 가깝지도 멀지도 않아 행성 표면에 물이 액체로 있을 수 있는 거리를 말합니다. 다만 이 영역에 있다고 해서 물이나 생명이 보장되지는 않습니다. <span class="src">(<a href="https://science.nasa.gov/exoplanets/habitable-zone" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <p>흥미로운 점은 이번 호의 후보 중 유로파와 엔셀라두스가 이 영역에서 한참 벗어나 있다는 것입니다. 유로파는 목성의 중력이 얼음 껍질을 늘였다 줄이기를 반복하며 내는 열 덕분에 바다가 얼지 않습니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/why-europa-ingredients-for-life" target="_blank" rel="noopener">NASA</a>)</span> 햇빛이 닿지 않아도 생명이 살 만한 곳이 있을 수 있다는 뜻입니다.</p>
+
+    <h2>화성: 한때 물이 흐르던 행성</h2>
+    <p>지금의 화성은 춥고 메마른 사막이지만, 아주 먼 옛날에는 강이 흐르고 호수가 고여 있었습니다. 퍼서비어런스가 2021년 2월 내려앉은 예제로 크레이터도 수십억 년 전에는 지름 약 35km, 깊이 약 30m의 호수였습니다. 강이 실어 온 퇴적물이 쌓인 삼각주는 화석을 잘 보존하는 곳이라 생명의 흔적을 찾기에 알맞습니다. <span class="src">(<a href="https://www.jpl.nasa.gov/news/nasas-perseverance-rover-deciphers-ancient-history-of-martian-lake" target="_blank" rel="noopener">NASA JPL</a>)</span></p>
+    <h3>'표범 무늬' 암석, 생명의 흔적일까</h3>
+    <p>2024년 7월 퍼서비어런스는 옛 강줄기였던 네레트바 계곡에서 '체야바 폭포'라는 암석을 찾았습니다. 표면에는 표범 무늬 같은 작은 점들이 박혀 있었습니다. 점 속에서는 비비아나이트(인산철)와 그레이가이트(황화철)라는 광물이 나왔는데, 지구에서는 미생물이 에너지를 얻는 과정에서 이런 광물이 만들어지기도 합니다. <span class="src">(<a href="https://www.jpl.nasa.gov/news/nasa-says-mars-rover-discovered-potential-biosignature-last-year/" target="_blank" rel="noopener">NASA JPL</a>)</span></p>
+    <ul>
+      <li><strong>"생명 발견에 가장 가까이 다가간 순간"</strong>: NASA는 2025년 9월 10일 이 결과를 학술지 '네이처'에 발표하며 이렇게 평가했습니다.</li>
+      <li><strong>아직은 '후보'</strong>: 생명이 없어도 일어나는 화학 반응으로 같은 광물이 생길 수 있습니다. NASA 과학자들도 그 가능성이 낮을 뿐 "배제할 수는 없다"고 말합니다.</li>
+    </ul>
+    <figure>
+      <img src="img/vol02-1.jpg" width="1280" height="932" loading="lazy" alt="퍼서비어런스가 찍은 화성 암석 '체야바 폭포'. 붉은 띠에 작은 점무늬가 박혀 있다">
+      <figcaption>2024년 7월 퍼서비어런스가 찍은 '체야바 폭포' 암석. 가운데 붉은 띠에 박힌 작은 점들이 '표범 무늬'입니다 (사진: NASA/JPL-Caltech/MSSS)</figcaption>
+    </figure>
+    <h3>"확인하려면 지구로 가져와야 하는데"</h3>
+    <p>확실히 알려면 시료를 지구 실험실에서 분석해야 합니다. 그런데 2026년 1월 미국 의회는 NASA의 화성 시료 회수(MSR) 사업에 예산을 주지 않기로 했고, 퍼서비어런스가 모은 30개 넘는 시료는 당분간 화성에 남게 됐습니다. <span class="src">(<a href="https://www.livescience.com/space/mars/nasas-mars-sample-return-is-dead-leaving-china-to-retrieve-signs-of-life-from-the-red-planet" target="_blank" rel="noopener">Live Science</a>, <a href="https://www.theregister.com/2026/01/16/nasa_science_budget/" target="_blank" rel="noopener">The Register</a>)</span></p>
+    <p>대신 다른 나라들이 나섭니다. 중국은 2028년 톈원 3호를 발사해 2031년 화성 시료를 지구로 가져올 계획입니다. 유럽의 로절린드 프랭클린 로버는 이르면 2028년 말 발사돼, 땅속 2m까지 파고들어 과거 생명의 흔적을 찾습니다. <span class="src">(<a href="https://www.livescience.com/space/mars/nasas-mars-sample-return-is-dead-leaving-china-to-retrieve-signs-of-life-from-the-red-planet" target="_blank" rel="noopener">Live Science</a>, <a href="https://www.theregister.com/2026/04/17/nasa_rosalind_franklin/" target="_blank" rel="noopener">The Register</a>)</span></p>
+
+    <h2>유로파: 얼음 아래 숨은 바다</h2>
+    <p>목성의 위성 유로파는 얼음 껍질 아래에 짠 바다를 품고 있습니다. 이 바다에는 지구의 모든 바닷물을 합친 것보다 약 두 배 많은 물이 있을 것으로 추정됩니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/why-europa-ingredients-for-life" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <ul>
+      <li><strong>얼음 두께 약 29km</strong>: NASA의 목성 탐사선 주노가 유로파를 스쳐 지나며 잰 자료를 분석한 결과입니다. 2025년 12월 발표됐습니다. 얼음이 두꺼울수록 표면의 산소와 영양분이 바다까지 내려가는 길도 멀어집니다. <span class="src">(<a href="https://www.jpl.nasa.gov/news/nasas-juno-measures-thickness-of-europas-ice-shell" target="_blank" rel="noopener">NASA JPL</a>)</span></li>
+      <li><strong>에너지</strong>: 목성의 방사선이 표면의 물 분자를 쪼개면 산소가 남습니다. 이 산소가 바다에 닿으면 미생물이 쓸 에너지가 될 수 있습니다. 바다 밑 암석 바닥의 열수 활동도 영양분을 공급할 수 있습니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/why-europa-ingredients-for-life" target="_blank" rel="noopener">NASA</a>)</span></li>
+    </ul>
+    <figure>
+      <img src="img/vol02-2.jpg" width="1280" height="946" loading="lazy" alt="갈릴레오 탐사선이 찍은 유로파. 표면에 붉은 줄무늬가 가로지른다">
+      <figcaption>갈릴레오 탐사선이 1990년대 후반에 찍은 유로파. 표면을 가로지르는 줄무늬는 얼음이 갈라지고 솟아오른 자국입니다 (사진: NASA/JPL-Caltech/SETI Institute)</figcaption>
+    </figure>
+    <h3>유로파 클리퍼, 2030년 도착</h3>
+    <p>NASA의 유로파 클리퍼는 2024년 10월 14일 발사됐습니다. 2025년 3월 화성 곁을 지나며 속도를 얻었고, 다음 달인 12월에는 지구 곁을 지나며 한 번 더 속도를 얻습니다. 2030년 4월 목성 궤도에 들어간 뒤에는 유로파를 50번 가까이 스쳐 지나며 표면 약 25km 위까지 다가갑니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/mission-timeline" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <p>클리퍼의 임무는 생명을 직접 찾는 것이 아니라, 유로파의 얼음 아래에 생명이 살 수 있는 환경이 있는지 확인하는 것입니다. <span class="src">(<a href="https://science.nasa.gov/mission/europa-clipper/mission-timeline" target="_blank" rel="noopener">NASA</a>)</span></p>
+
+    <h2>엔셀라두스: 우주로 바닷물을 뿜는 얼음위성</h2>
+    <p>토성의 작은 위성 엔셀라두스는 2005년 카시니 탐사선이 남극에서 솟구치는 물기둥을 발견하며 주목받았습니다. 얼음 지각의 뜨거운 틈으로 지하 바닷물이 우주로 뿜어져 나오는 것입니다. <span class="src">(<a href="https://science.nasa.gov/missions/cassini/nasa-missions-provide-new-insights-into-ocean-worlds-in-our-solar-system-2/" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <p>덕분에 카시니는 착륙하지 않고도 물기둥을 통과하며 바닷물을 '맛볼' 수 있었습니다. 그렇게 밝혀낸 것들은 이렇습니다.</p>
+    <ul>
+      <li><strong>에너지</strong>: 물기둥 기체의 약 1%가 수소였습니다. 바다 밑에서 뜨거운 물과 암석이 반응하고 있다는 증거로, 지구의 미생물처럼 수소와 이산화탄소로 메탄을 만들며 살아가는 생명이라면 먹이로 쓸 수 있습니다. 연구를 이끈 헌터 웨이트는 "생명을 찾지는 못했지만, 생명이 먹을 음식은 찾았다"고 말했습니다. <span class="src">(2017년, <a href="https://science.nasa.gov/missions/cassini/nasa-missions-provide-new-insights-into-ocean-worlds-in-our-solar-system-2/" target="_blank" rel="noopener">NASA</a>)</span></li>
+      <li><strong>인</strong>: 얼음 알갱이에서 인산염이 발견됐습니다. 엔셀라두스 바다의 인 농도는 지구 바다의 100배가 넘습니다. <span class="src">(2023년, <a href="https://www.jpl.nasa.gov/news/nasa-cassini-data-reveals-building-block-for-life-in-enceladus-ocean/" target="_blank" rel="noopener">NASA JPL</a>)</span></li>
+      <li><strong>새로운 유기물</strong>: 방금 뿜어져 나온 얼음 알갱이에서 이전에 보지 못한 유기 분자들을 확인했습니다. 더 복잡한 유기 화합물로 이어질 수 있는 재료입니다. <span class="src">(2025년, <a href="https://www.jpl.nasa.gov/news/nasa-cassini-study-finds-organics-fresh-from-ocean-of-enceladus/" target="_blank" rel="noopener">NASA JPL</a>)</span></li>
+    </ul>
+    <figure>
+      <img src="img/vol02-3.jpg" width="1019" height="863" loading="lazy" alt="햇빛을 등진 엔셀라두스의 남극 가장자리에서 물기둥이 뿜어져 나오는 모습">
+      <figcaption>2005년 카시니가 찍은 엔셀라두스. 햇빛을 등진 위성의 남극 주변 가장자리에서 물기둥이 뿜어져 나오고 있습니다 (사진: NASA/JPL/Space Science Institute)</figcaption>
+    </figure>
+    <p>엔셀라두스는 이처럼 물과 에너지, 생명의 재료까지 세 가지 조건을 모두 갖춘 것으로 보입니다.</p>
+    <h3>유럽, 2040년대 착륙선 구상</h3>
+    <p>유럽우주국(ESA)은 2024년 목성·토성의 위성 후보 가운데 엔셀라두스를 차기 대형 임무의 1순위로 꼽았습니다. 2040년대 초 발사해 약 10년 뒤 도착하고, 얼음이 얇은 남극에 내려 물기둥에서 떨어진 바다 물질을 직접 분석하는 구상입니다. 목표는 과거나 현재의 생명 흔적을 찾는 것입니다. <span class="src">(<a href="https://www.esa.int/Science_Exploration/Space_Science/Saturn_s_moon_Enceladus_top_target_for_ESA" target="_blank" rel="noopener">ESA</a>)</span></p>
+
+    <h2>태양계 밖: 또 하나의 지구, TRAPPIST-1e</h2>
+    <p>2017년 2월 22일 NASA는 물병자리 방향 약 40광년 떨어진 작고 차가운 별 TRAPPIST-1 주위에서 지구만 한 행성 7개를 찾았다고 발표했습니다. 한 별 주위에서 지구 크기 행성이 이렇게 많이 발견된 건 처음이었고, 그중 3개가 생명 거주 가능 영역 안에 있었습니다. <span class="src">(<a href="https://www.nasa.gov/news-release/nasa-telescope-reveals-largest-batch-of-earth-size-habitable-zone-planets-around-single-star" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <p>그중 가장 주목받는 것이 네 번째 행성 TRAPPIST-1e입니다. 대기만 있다면 표면에 물이 있을 수 있는 거리를 돌고 있습니다. 달처럼 항상 같은 면만 별을 향하기 때문에, 바다가 행성 전체를 덮었거나 별을 마주한 쪽에만 있고 나머지는 얼음으로 둘러싸였을 수 있습니다. <span class="src">(<a href="https://science.nasa.gov/missions/webb/nasa-webb-looks-at-earth-sized-habitable-zone-exoplanet-trappist-1-e" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <figure>
+      <img src="img/vol02-4.jpg" width="1280" height="720" loading="lazy" alt="붉은 별 TRAPPIST-1 앞을 지나는 행성들을 그린 상상도">
+      <figcaption>적색왜성 TRAPPIST-1과 가장 가까이 도는 행성 네 개를 그린 상상도 (그림: NASA, ESA, CSA, STScI, Joseph Olmsted (STScI))</figcaption>
+    </figure>
+    <h3>관건은 '대기가 있느냐'</h3>
+    <ul>
+      <li><strong>제임스웹의 첫 결과 (2025년 9월)</strong>: 행성이 별 앞을 지나는 장면 4번을 분석했습니다. 처음 갖고 있던 수소 대기는 별빛에 날아갔을 가능성이 크고, 금성·화성처럼 이산화탄소가 주성분인 대기일 가능성도 낮았습니다. 새로운 대기가 있을 가능성은 반반입니다. <span class="src">(<a href="https://science.nasa.gov/missions/webb/nasa-webb-looks-at-earth-sized-habitable-zone-exoplanet-trappist-1-e" target="_blank" rel="noopener">NASA</a>)</span></li>
+      <li><strong>다음 관측</strong>: 제임스웹은 15번의 추가 관측을 진행하고 있습니다. 대기가 없는 맨 암석으로 보이는 안쪽 행성 b와 e를 연달아 관측해, 별의 신호와 행성 대기의 신호를 가려낼 계획입니다. <span class="src">(<a href="https://science.nasa.gov/missions/webb/nasa-webb-looks-at-earth-sized-habitable-zone-exoplanet-trappist-1-e" target="_blank" rel="noopener">NASA</a>)</span></li>
+    </ul>
+    <p>애리조나대 연구를 이끈 수크리트 란잔은 이렇게 요약합니다. "대기가 있다면 살 수 있는 행성입니다. 문제는 대기가 정말 있느냐죠." <span class="src">(<a href="https://news.arizona.edu/news/new-look-trappist-1e-earth-sized-habitable-zone-exoplanet" target="_blank" rel="noopener">애리조나대</a>)</span></p>
+
+    <h2>물보다 더 중요한 건?</h2>
+    <p>지금까지 살펴본 후보들은 모두 '물'을 기준으로 골랐습니다. 하지만 물은 생명이 '살 수 있다'는 조건일 뿐, 생명이 '살고 있다'는 증거는 아닙니다. 멀리서도 생명을 알아보게 해 주는 것은 오히려 식물, 곧 '나무'가 남기는 흔적입니다.</p>
+    <h3>우주에서 본 지구, 생명의 증거는 식물이었다</h3>
+    <p>1990년 12월, 목성으로 가던 NASA의 갈릴레오 탐사선이 지구 곁을 스쳐 지났습니다. 천문학자 칼 세이건은 이 기회에 "외계인이 지구를 지나간다면 생명을 알아챌 수 있을까"를 실험했고, 결과는 1993년 '네이처'에 실렸습니다. 갈릴레오가 찾아낸 생명의 신호는 세 가지였습니다. <span class="src">(<a href="https://www.scientificamerican.com/article/how-would-we-know-theres-life-on-earth-this-bold-experiment-found-out/" target="_blank" rel="noopener">Scientific American</a>)</span></p>
+    <ul>
+      <li><strong>산소와 메탄</strong>: 두 기체가 함께 있다는 것은 누군가 계속 만들어 내고 있다는 뜻입니다. 생명이 없다면 이 둘은 함께 오래 남기 어렵습니다.</li>
+      <li><strong>레드 에지</strong>: 땅을 덮은 식물이 남긴 빛의 신호입니다.</li>
+      <li><strong>전파</strong>: 자연에서는 나오기 어려운 인공적인 전파입니다.</li>
+    </ul>
+    <figure>
+      <img src="img/vol02-5.jpg" width="800" height="800" loading="lazy" alt="갈릴레오가 우주에서 찍은 지구. 남아메리카와 남극 대륙이 보인다">
+      <figcaption>1990년 12월 11일, 목성으로 가던 갈릴레오가 약 210만 km 밖에서 찍은 지구. 가운데가 남아메리카, 아래가 남극 대륙입니다 (사진: NASA/JPL)</figcaption>
+    </figure>
+    <p>넓은 바다는 지구에 물이 많다는 것을 보여 줄 뿐입니다. 생명이 있다는 증거는 식물과 생명이 만든 기체에서 나왔습니다.</p>
+    <h3>레드 에지: 나뭇잎이 보내는 신호</h3>
+    <p>식물의 잎은 광합성에 쓰는 붉은빛은 흡수하고, 그보다 파장이 조금 긴 근적외선(약 700~750nm)은 갑자기 10배 가까이 강하게 반사합니다. 이 급격한 '계단'을 레드 에지라고 부릅니다. 과학자들은 먼 외계행성의 빛에서도 이런 신호를 찾을 수 있다고 봅니다. 다만 일부 광물도 비슷한 신호를 내기 때문에 신중하게 해석해야 합니다. <span class="src">(<a href="https://arxiv.org/abs/astro-ph/0503302" target="_blank" rel="noopener">Seager 외, 2005</a>)</span></p>
+    <h3>식물은 행성을 바꾼다</h3>
+    <ul>
+      <li><strong>산소를 채웠다</strong>: 약 4억 7천만 년 전부터 땅에 오른 초기 육상식물(주로 이끼류)은 대기 산소를 4억 2천만~4억 년 전 무렵 오늘날 수준으로 끌어올렸습니다. 이 산소 덕분에 크고 활발하게 움직이는 동물, 그리고 인간이 진화할 수 있었습니다. <span class="src">(<a href="https://sciencedaily.com/releases/2016/08/160815185610.htm" target="_blank" rel="noopener">ScienceDaily</a>)</span></li>
+      <li><strong>행성을 데운다</strong>: 숲은 맨땅보다 어두워 햇빛을 더 많이 흡수합니다. 2024년 이탈리아 연구팀의 계산에 따르면 식물로 덮인 행성은 더 따뜻해지고, 그만큼 생명 거주 가능 영역의 바깥 경계가 넓어집니다. 풀밭보다 숲이 많은 행성일수록 효과가 컸습니다. 연구진은 그 효과가 크지는 않지만 무시할 수는 없다고 밝혔습니다. <span class="src">(<a href="https://www.universetoday.com/168291/how-vegetation-could-impact-the-climate-of-exoplanets/" target="_blank" rel="noopener">Universe Today</a>)</span></li>
+      <li><strong>문명의 조건이 된다</strong>: 불을 피우고 금속을 다루려면 대기 중 산소가 약 18% 이상이어야 합니다. 2023년 '네이처 천문학'에 실린 연구는 산소가 충분하지 않은 행성에서는 기술 문명이 나오기 어렵다고 주장했습니다. <span class="src">(<a href="https://sciencedaily.com/releases/2024/01/240102174047.htm" target="_blank" rel="noopener">ScienceDaily</a>)</span></li>
+    </ul>
+    <h3>다음 망원경은 생명의 기체를 찾는다</h3>
+    <p>NASA가 구상하는 차세대 우주망원경 '거주 가능 세계 관측선(HWO)'은 생명이 살 만한 행성 25곳을 직접 촬영하고, 대기에서 산소·메탄 같은 생명의 신호를 찾는 것을 목표로 합니다. <span class="src">(<a href="https://science.nasa.gov/astrophysics/programs/habitable-worlds-observatory/" target="_blank" rel="noopener">NASA</a>)</span></p>
+    <blockquote class="closing">물을 찾는 것이 생명 탐사의 첫걸음이라면, 나무가 남긴 흔적을 찾는 것은 마지막 증명이 될지도 모릅니다.</blockquote>
+
+    <h2>한눈에 보는 연표</h2>
+    <div class="tl-wrap">
+<svg class="timeline" viewBox="0 0 760 1170" role="img" aria-label="태양계 안은 탐사선이, 밖은 망원경이 생명을 찾는다" font-size="13">
+<text x="24" y="30" font-size="15" font-weight="600" class="t-ink">태양계 안은 탐사선이, 밖은 망원경이 생명을 찾는다</text>
+<text x="24" y="50" font-size="11.5" class="t-quiet">생명 탐사 주요 사건 연표, 2017~2031</text>
+<circle cx="30" cy="70" r="5" class="f-edge"/><text x="42" y="74" font-size="11.5" class="t-quiet">완료</text>
+<circle cx="90" cy="70" r="5" fill="none" class="s-edge" stroke-width="1.5"/><text x="102" y="74" font-size="11.5" class="t-quiet">계획·목표</text>
+<circle cx="178" cy="70" r="6" class="hi" stroke-width="2"/><text x="191" y="74" font-size="11.5" class="t-quiet">다음 큰 장면</text>
+<text x="336" y="104" text-anchor="end" font-weight="600" class="t-ink">태양계 안 · 탐사선</text><text x="424" y="104" font-weight="600" class="t-ink">태양계 밖 · 망원경</text>
+<line x1="350" x2="350" y1="114" y2="1146" class="s-grid" stroke-width="1.25"/><line x1="410" x2="410" y1="114" y2="1146" class="s-grid" stroke-width="1.25"/>
+<text x="24" y="124.0" font-size="11.5" class="t-quiet">2017</text><line x1="344" x2="356" y1="120.0" y2="120.0" class="s-grid"/><line x1="404" x2="416" y1="120.0" y2="120.0" class="s-grid"/>
+<text x="24" y="192.0" font-size="11.5" class="t-quiet">2018</text><line x1="344" x2="356" y1="188.0" y2="188.0" class="s-grid"/><line x1="404" x2="416" y1="188.0" y2="188.0" class="s-grid"/>
+<text x="24" y="259.9" font-size="11.5" class="t-quiet">2019</text><line x1="344" x2="356" y1="255.9" y2="255.9" class="s-grid"/><line x1="404" x2="416" y1="255.9" y2="255.9" class="s-grid"/>
+<text x="24" y="327.9" font-size="11.5" class="t-quiet">2020</text><line x1="344" x2="356" y1="323.9" y2="323.9" class="s-grid"/><line x1="404" x2="416" y1="323.9" y2="323.9" class="s-grid"/>
+<text x="24" y="396.0" font-size="11.5" class="t-quiet">2021</text><line x1="344" x2="356" y1="392.0" y2="392.0" class="s-grid"/><line x1="404" x2="416" y1="392.0" y2="392.0" class="s-grid"/>
+<text x="24" y="464.0" font-size="11.5" class="t-quiet">2022</text><line x1="344" x2="356" y1="460.0" y2="460.0" class="s-grid"/><line x1="404" x2="416" y1="460.0" y2="460.0" class="s-grid"/>
+<text x="24" y="531.9" font-size="11.5" class="t-quiet">2023</text><line x1="344" x2="356" y1="527.9" y2="527.9" class="s-grid"/><line x1="404" x2="416" y1="527.9" y2="527.9" class="s-grid"/>
+<text x="24" y="599.9" font-size="11.5" class="t-quiet">2024</text><line x1="344" x2="356" y1="595.9" y2="595.9" class="s-grid"/><line x1="404" x2="416" y1="595.9" y2="595.9" class="s-grid"/>
+<text x="24" y="668.0" font-size="11.5" class="t-quiet">2025</text><line x1="344" x2="356" y1="664.0" y2="664.0" class="s-grid"/><line x1="404" x2="416" y1="664.0" y2="664.0" class="s-grid"/>
+<text x="24" y="736.0" font-size="11.5" class="t-quiet">2026</text><line x1="344" x2="356" y1="732.0" y2="732.0" class="s-grid"/><line x1="404" x2="416" y1="732.0" y2="732.0" class="s-grid"/>
+<text x="24" y="803.9" font-size="11.5" class="t-quiet">2027</text><line x1="344" x2="356" y1="799.9" y2="799.9" class="s-grid"/><line x1="404" x2="416" y1="799.9" y2="799.9" class="s-grid"/>
+<text x="24" y="871.9" font-size="11.5" class="t-quiet">2028</text><line x1="344" x2="356" y1="867.9" y2="867.9" class="s-grid"/><line x1="404" x2="416" y1="867.9" y2="867.9" class="s-grid"/>
+<text x="24" y="940.0" font-size="11.5" class="t-quiet">2029</text><line x1="344" x2="356" y1="936.0" y2="936.0" class="s-grid"/><line x1="404" x2="416" y1="936.0" y2="936.0" class="s-grid"/>
+<text x="24" y="1008.0" font-size="11.5" class="t-quiet">2030</text><line x1="344" x2="356" y1="1004.0" y2="1004.0" class="s-grid"/><line x1="404" x2="416" y1="1004.0" y2="1004.0" class="s-grid"/>
+<text x="24" y="1075.9" font-size="11.5" class="t-quiet">2031</text><line x1="344" x2="356" y1="1071.9" y2="1071.9" class="s-grid"/><line x1="404" x2="416" y1="1071.9" y2="1071.9" class="s-grid"/>
+<text x="24" y="1143.9" font-size="11.5" class="t-quiet">2032</text><line x1="344" x2="356" y1="1139.9" y2="1139.9" class="s-grid"/><line x1="404" x2="416" y1="1139.9" y2="1139.9" class="s-grid"/>
+<line x1="64" x2="736" y1="792.8" y2="792.8" class="s-edge" stroke-width="1" stroke-dasharray="4 4"/><text x="736" y="786.8" text-anchor="end" font-size="11.5" font-weight="600" class="t-ink">지금 2026.11</text>
+<circle cx="410" cy="129.7" r="6" class="f-edge"/>
+<text x="424" y="149.7" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2017.2</text>
+<text x="424" y="133.7" text-anchor="start" font-weight="400" class="t-ink">TRAPPIST-1 행성 7개 발견 발표</text>
+<circle cx="350" cy="400.9" r="6" class="f-edge"/>
+<text x="336" y="420.9" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2021.2</text>
+<text x="336" y="404.9" text-anchor="end" font-weight="400" class="t-ink">퍼서비어런스 화성 착륙</text>
+<circle cx="410" cy="458.7" r="6" class="f-edge"/>
+<text x="424" y="478.7" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2021.12</text>
+<text x="424" y="462.7" text-anchor="start" font-weight="400" class="t-ink">제임스웹 우주망원경 발사</text>
+<circle cx="350" cy="649.3" r="6" class="f-edge"/>
+<text x="336" y="669.3" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2024.10</text>
+<text x="336" y="653.3" text-anchor="end" font-weight="400" class="t-ink">유로파 클리퍼 발사</text>
+<circle cx="410" cy="676.8" r="6" class="f-edge"/>
+<text x="424" y="696.8" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2025.3</text>
+<text x="424" y="680.8" text-anchor="start" font-weight="400" class="t-ink">스피어엑스 발사 · 한국 참여</text>
+<circle cx="410" cy="710.5" r="6" class="f-edge"/>
+<text x="424" y="730.5" text-anchor="start" font-size="11.5" font-weight="400" class="t-quiet">2025.9</text>
+<text x="424" y="714.5" text-anchor="start" font-weight="400" class="t-ink">제임스웹, TRAPPIST-1e 첫 분석</text>
+<circle cx="350" cy="710.9" r="6" class="f-edge"/>
+<text x="336" y="730.9" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2025.9</text>
+<text x="336" y="714.9" text-anchor="end" font-weight="400" class="t-ink">화성 생명 흔적 후보 발표</text>
+<circle cx="350" cy="918.9" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="336" y="938.9" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2028년 목표</text>
+<text x="336" y="922.9" text-anchor="end" font-weight="400" class="t-ink">로절린드 프랭클린·톈원 3호 발사</text>
+<circle cx="350" cy="1020.7" r="7" class="hi" stroke-width="2"/>
+<text x="336" y="1040.7" text-anchor="end" font-size="11.5" font-weight="600" class="t-ink">2030년 목표</text>
+<text x="336" y="1024.7" text-anchor="end" font-weight="600" class="t-ink">유로파 클리퍼 목성 도착</text>
+<circle cx="350" cy="1105.6" r="6" fill="none" class="s-edge" stroke-width="1.5"/>
+<text x="336" y="1125.6" text-anchor="end" font-size="11.5" font-weight="400" class="t-quiet">2031년 목표</text>
+<text x="336" y="1109.6" text-anchor="end" font-weight="400" class="t-ink">화성 시료 지구 귀환 (중국)</text>
+</svg>
+    </div>
+    <p class="note">점선 위는 이미 일어난 일, 아래는 목표입니다. 목표 연도는 예산과 개발 사정에 따라 바뀔 수 있습니다.</p>
+
+    <section class="sources">
+      <h2>출처</h2>
+      <h3>생명의 조건</h3>
+      <ul>
+        <li><a href="https://science.nasa.gov/exoplanets/habitable-zone" target="_blank" rel="noopener">NASA – 생명 거주 가능 영역이란</a></li>
+        <li><a href="https://science.nasa.gov/mission/europa-clipper/why-europa-ingredients-for-life" target="_blank" rel="noopener">NASA – 유로파 클리퍼: 생명의 세 가지 재료</a></li>
+      </ul>
+      <h3>화성</h3>
+      <ul>
+        <li><a href="https://www.jpl.nasa.gov/news/nasa-says-mars-rover-discovered-potential-biosignature-last-year/" target="_blank" rel="noopener">NASA JPL – 퍼서비어런스, 잠재적 생명 신호 발표 (2025.9.10)</a></li>
+        <li><a href="https://www.jpl.nasa.gov/news/nasas-perseverance-rover-deciphers-ancient-history-of-martian-lake" target="_blank" rel="noopener">NASA JPL – 예제로 크레이터 호수의 역사</a></li>
+        <li><a href="https://www.livescience.com/space/mars/nasas-mars-sample-return-is-dead-leaving-china-to-retrieve-signs-of-life-from-the-red-planet" target="_blank" rel="noopener">Live Science – 화성 시료 회수 취소와 중국 톈원 3호 (2026.1.16)</a></li>
+        <li><a href="https://www.theregister.com/2026/01/16/nasa_science_budget/" target="_blank" rel="noopener">The Register – 미 의회 예산안, 화성 시료 회수 취소 (2026.1.16)</a></li>
+        <li><a href="https://www.theregister.com/2026/04/17/nasa_rosalind_franklin/" target="_blank" rel="noopener">The Register – 로절린드 프랭클린 로버, 2028년 발사 추진 (2026.4.17)</a></li>
+      </ul>
+      <h3>유로파·엔셀라두스</h3>
+      <ul>
+        <li><a href="https://science.nasa.gov/mission/europa-clipper/mission-timeline" target="_blank" rel="noopener">NASA – 유로파 클리퍼 임무 일정</a></li>
+        <li><a href="https://www.jpl.nasa.gov/news/nasas-juno-measures-thickness-of-europas-ice-shell" target="_blank" rel="noopener">NASA JPL – 주노, 유로파 얼음 두께 측정</a></li>
+        <li><a href="https://science.nasa.gov/missions/cassini/nasa-missions-provide-new-insights-into-ocean-worlds-in-our-solar-system-2/" target="_blank" rel="noopener">NASA – 카시니, 엔셀라두스 물기둥에서 수소 발견 (2017)</a></li>
+        <li><a href="https://www.jpl.nasa.gov/news/nasa-cassini-data-reveals-building-block-for-life-in-enceladus-ocean/" target="_blank" rel="noopener">NASA JPL – 엔셀라두스 바다에서 인 발견 (2023)</a></li>
+        <li><a href="https://www.jpl.nasa.gov/news/nasa-cassini-study-finds-organics-fresh-from-ocean-of-enceladus/" target="_blank" rel="noopener">NASA JPL – 엔셀라두스의 새로운 유기물 (2025)</a></li>
+        <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Saturn_s_moon_Enceladus_top_target_for_ESA" target="_blank" rel="noopener">ESA – 엔셀라두스, ESA 대형 임무 1순위 (2024.3.25)</a></li>
+      </ul>
+      <h3>외계행성</h3>
+      <ul>
+        <li><a href="https://www.nasa.gov/news-release/nasa-telescope-reveals-largest-batch-of-earth-size-habitable-zone-planets-around-single-star" target="_blank" rel="noopener">NASA – TRAPPIST-1 행성 7개 발견 (2017.2.22)</a></li>
+        <li><a href="https://science.nasa.gov/missions/webb/nasa-webb-looks-at-earth-sized-habitable-zone-exoplanet-trappist-1-e" target="_blank" rel="noopener">NASA – 제임스웹, TRAPPIST-1e 관측 (2025.9.8)</a></li>
+        <li><a href="https://news.arizona.edu/news/new-look-trappist-1e-earth-sized-habitable-zone-exoplanet" target="_blank" rel="noopener">애리조나대 – TRAPPIST-1e 새 분석 (2025.12.4)</a></li>
+      </ul>
+      <h3>물보다 더 중요한 건</h3>
+      <ul>
+        <li><a href="https://www.scientificamerican.com/article/how-would-we-know-theres-life-on-earth-this-bold-experiment-found-out/" target="_blank" rel="noopener">Scientific American – 갈릴레오가 지구에서 생명을 찾은 실험</a></li>
+        <li><a href="https://arxiv.org/abs/astro-ph/0503302" target="_blank" rel="noopener">Seager 외 (2005) – 식물의 레드 에지, 외계 식물의 생명 신호</a></li>
+        <li><a href="https://sciencedaily.com/releases/2016/08/160815185610.htm" target="_blank" rel="noopener">ScienceDaily – 초기 육상식물이 대기 산소를 채웠다 (2016)</a></li>
+        <li><a href="https://www.universetoday.com/168291/how-vegetation-could-impact-the-climate-of-exoplanets/" target="_blank" rel="noopener">Universe Today – 식생이 외계행성 기후에 미치는 영향 (2024)</a></li>
+        <li><a href="https://sciencedaily.com/releases/2024/01/240102174047.htm" target="_blank" rel="noopener">ScienceDaily – 기술 문명과 산소의 병목 (2024)</a></li>
+        <li><a href="https://science.nasa.gov/astrophysics/programs/habitable-worlds-observatory/" target="_blank" rel="noopener">NASA – 거주 가능 세계 관측선(HWO)</a></li>
+      </ul>
+      <h3>연표</h3>
+      <ul>
+        <li><a href="https://www.khan.co.kr/article/202512191100001" target="_blank" rel="noopener">경향신문 – 스피어엑스 전천 지도 공개 (2025.12.19)</a></li>
+      </ul>
+      <h3>사진</h3>
+      <ul>
+        <li><a href="https://images.nasa.gov/details/PIA26368" target="_blank" rel="noopener">화성 암석 '체야바 폭포'의 표범 무늬 – NASA/JPL-Caltech/MSSS</a></li>
+        <li><a href="https://images.nasa.gov/details/PIA19048" target="_blank" rel="noopener">갈릴레오가 찍은 유로파 – NASA/JPL-Caltech/SETI Institute</a></li>
+        <li><a href="https://images.nasa.gov/details/PIA07758" target="_blank" rel="noopener">엔셀라두스의 물기둥 – NASA/JPL/Space Science Institute</a></li>
+        <li><a href="https://science.nasa.gov/missions/webb/nasa-webb-looks-at-earth-sized-habitable-zone-exoplanet-trappist-1-e" target="_blank" rel="noopener">TRAPPIST-1e 상상도 – NASA, ESA, CSA, STScI, Joseph Olmsted (STScI)</a></li>
+        <li><a href="https://images.nasa.gov/details/PIA00114" target="_blank" rel="noopener">갈릴레오가 찍은 지구(1990) – NASA/JPL</a></li>
+      </ul>
+    </section>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <img src="../assets/logo-light.png" alt="OrbitCraft" width="484" height="360" loading="lazy">
+    <span>© 2026 OrbitCraft · 문현빈</span>
+    <a href="../index.html#monthly">← OrbitCraft로 돌아가기</a>
+  </div>
+</footer>
+<script>
+(function () {
+  var bar = document.getElementById("progress");
+  function upd() {
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = "scaleX(" + (h > 0 ? Math.min(1, scrollY / h) : 0).toFixed(4) + ")";
+  }
+  addEventListener("scroll", upd, { passive: true }); addEventListener("resize", upd); upd();
+  var els = document.querySelectorAll("article figure, .table-wrap, .tl-wrap, blockquote.closing");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    els.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+  if (!location.hostname.endsWith("github.io")) {
+    document.querySelectorAll('a[target="_blank"]').forEach(function (a) { if (!/^https?:/.test(a.getAttribute("href"))) a.removeAttribute("target"); });
+  }
+})();
+</script>
+</body>
+</html>
